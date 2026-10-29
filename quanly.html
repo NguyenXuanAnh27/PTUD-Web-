@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bảng Điều Khiển & Quản Lý Thực Đơn - TULO COFFEE</title>
+  <meta name="description" content="Trang quản trị quán Tulo Coffee: Thêm, sửa, xóa, tìm kiếm, lọc, thống kê doanh thu và quản lý danh mục thức uống.">
+  
+  <!-- Phông chữ Google Fonts -->
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Chính -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==================== THANH ĐIỀU HƯỚNG ==================== -->
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="brand-logo" title="Tulo Coffee Trang Chủ">
+        <div class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+            <line x1="6" y1="1" x2="6" y2="4"></line>
+            <line x1="10" y1="1" x2="10" y2="4"></line>
+            <line x1="14" y1="1" x2="14" y2="4"></line>
+          </svg>
+        </div>
+        <span>TULO COFFEE</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Trang Chủ</a></li>
+          <li><a href="menu.html" class="nav-link">Thực Đơn</a></li>
+          <li><a href="index.html#about" class="nav-link">Chuyện Nghề</a></li>
+          <li><a href="index.html#contact" class="nav-link">Ghé Thăm</a></li>
+          <li><a href="quanly.html" class="nav-link active" style="color: var(--accent);">Quản Trị</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" class="btn-icon theme-toggle-btn" title="Chuyển chế độ sáng/tối" aria-label="Đổi giao diện">
+          <span class="theme-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+        </button>
+
+        <button type="button" class="btn btn-primary btn-sm cart-btn cart-trigger-btn" aria-label="Xem giỏ hàng">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span>Giỏ Hàng</span>
+          <span class="cart-badge" style="display: none;">0</span>
+        </button>
+
+        <button type="button" class="btn-icon mobile-toggle" aria-label="Mở menu di động">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="section-padding">
+    <div class="container">
+      
+      <!-- Tiêu đề trang quản lý -->
+      <div class="flex-between" style="margin-bottom: 28px; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="section-subtitle">DASHBOARD QUẢN TRỊ</span>
+          <h1 class="section-title" style="margin-bottom: 4px;">Quản Lý Thực Đơn</h1>
+          <p style="color: var(--text-muted); font-size: 0.95rem;">Theo dõi số liệu, thêm mới và tùy chỉnh thực đơn quán trong thời gian thực.</p>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <!-- Nút hành động bổ sung -->
+          <button type="button" id="resetDataBtn" class="btn btn-secondary btn-sm" title="Khôi phục lại dữ liệu gốc ban đầu">
+            <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            <span>Dữ Liệu Mẫu</span>
+          </button>
+          
+          <button type="button" id="exportJsonBtn" class="btn btn-secondary btn-sm" title="Xuất dữ liệu ra file JSON để sao lưu">
+            <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            <span>Xuất JSON</span>
+          </button>
+
+          <!-- Input ẩn để chọn file JSON -->
+          <input type="file" id="importJsonInput" accept=".json" style="display: none;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('importJsonInput').click();" title="Nhập dữ liệu từ file JSON sao lưu">
+            <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Nhập JSON</span>
+          </button>
+
+          <button type="button" id="openAddModalBtn" class="btn btn-primary">
+            <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Thêm Món Mới</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- ==================== 1. THỐNG KÊ DASHBOARD ==================== -->
+      <section class="dashboard-stats" aria-label="Thống kê tổng quan">
+        <div class="stat-card">
+          <div class="stat-icon" aria-hidden="true">
+            <svg class="icon-svg-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+              <line x1="6" y1="1" x2="6" y2="4"></line>
+              <line x1="10" y1="1" x2="10" y2="4"></line>
+              <line x1="14" y1="1" x2="14" y2="4"></line>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <h5>Tổng Số Món</h5>
+            <div id="statTotalItems" class="stat-number">0</div>
+            <div class="stat-sub">Trong toàn bộ thực đơn</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background-color: var(--status-available-bg); color: var(--status-available-text);" aria-hidden="true">
+            <svg class="icon-svg-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <h5>Đang Phục Vụ</h5>
+            <div id="statAvailable" class="stat-number">0</div>
+            <div class="stat-sub">Món sẵn sàng gọi</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" style="background-color: var(--status-out-bg); color: var(--status-out-text);" aria-hidden="true">
+            <svg class="icon-svg-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <h5>Tạm Hết Hàng</h5>
+            <div id="statOutOfStock" class="stat-number">0</div>
+            <div class="stat-sub">Cần nhập thêm nguyên liệu</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon" aria-hidden="true">
+            <svg class="icon-svg-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <div class="stat-info">
+            <h5>Giá Trung Bình</h5>
+            <div id="statAvgPrice" class="stat-number">0 ₫</div>
+            <div class="stat-sub">Mỗi món trong menu</div>
+          </div>
+        </div>
+
+        <div class="stat-card" style="grid-column: 1 / -1;">
+          <div class="stat-icon" aria-hidden="true">
+            <svg class="icon-svg-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <div class="stat-info" style="flex-grow: 1;">
+            <h5>Món Có Giá Cao Nhất</h5>
+            <div id="statMaxPrice" class="stat-number" style="font-size: 1.3rem; color: var(--primary);">Đang tính toán...</div>
+            <div class="stat-sub">Dòng sản phẩm cao cấp của Tulo Coffee</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 2. THANH LỌC VÀ TÌM KIẾM DỮ LIỆU ==================== -->
+      <section class="filter-bar" aria-label="Bộ lọc quản lý">
+        <div class="search-row">
+          <div class="search-input-wrapper">
+            <span class="search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input type="text" id="adminSearchInput" class="form-input" placeholder="Tìm theo tên món hoặc mã món (VD: CF001, cà phê, trà ô long, tiramisu)...">
+          </div>
+        </div>
+
+        <div class="filter-controls">
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+            <label for="adminCatFilter" style="font-size: 0.9rem; font-weight: 600;">Danh mục:</label>
+            <select id="adminCatFilter" class="form-select" style="min-width: 140px;">
+              <option value="all">Tất cả danh mục</option>
+              <option value="Cà phê">Cà phê</option>
+              <option value="Trà">Trà</option>
+              <option value="Sinh tố">Sinh tố</option>
+              <option value="Bánh">Bánh</option>
+            </select>
+
+            <label for="adminStatusFilter" style="font-size: 0.9rem; font-weight: 600;">Trạng thái:</label>
+            <select id="adminStatusFilter" class="form-select" style="min-width: 140px;">
+              <option value="all">Tất cả trạng thái</option>
+              <option value="available">Còn hàng</option>
+              <option value="out_of_stock">Hết hàng</option>
+            </select>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <label for="adminSortSelect" style="font-size: 0.9rem; font-weight: 600;">Sắp xếp:</label>
+            <select id="adminSortSelect" class="form-select" style="min-width: 170px;">
+              <option value="newest">Mới nhất</option>
+              <option value="name-asc">Tên món: A - Z</option>
+              <option value="price-asc">Giá: Thấp đến Cao</option>
+              <option value="price-desc">Giá: Cao đến Thấp</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 3. BẢNG DỮ LIỆU SẢN PHẨM ==================== -->
+      <section class="table-card" aria-label="Bảng quản lý món">
+        <div class="table-header-bar">
+          <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Danh Sách Món Thực Đơn</h3>
+          <span style="font-size: 0.88rem; color: var(--text-muted);">Hỗ trợ cuộn ngang trên điện thoại di động</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">STT</th>
+                <th style="width: 90px;">Mã Món</th>
+                <th style="width: 70px;">Hình Ảnh</th>
+                <th>Tên Món & Mô Tả</th>
+                <th style="width: 110px;">Danh Mục</th>
+                <th style="width: 120px;">Giá Bán</th>
+                <th style="width: 120px;">Trạng Thái</th>
+                <th style="width: 140px; text-align: center;">Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody">
+              <!-- Render động bởi js/app.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Thanh phân trang (Pagination) -->
+        <div id="adminPagination" class="pagination">
+          <!-- Render động bởi js/app.js -->
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ==================== MODAL THÊM / SỬA MÓN ==================== -->
+  <div id="productModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 id="modalTitle" class="modal-title">Thêm Món Mới</h3>
+        <button type="button" id="closeModalX" class="btn-icon" aria-label="Đóng">&times;</button>
+      </div>
+
+      <form id="productForm" novalidate>
+        <div class="modal-body">
+          <!-- Hàng 1: Mã món (Tự sinh) & Danh mục -->
+          <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 16px;">
+            <div class="form-group">
+              <label for="productId" class="form-label">Mã món (Tự sinh):</label>
+              <input type="text" id="productId" class="form-input" readonly style="background-color: var(--border-color); font-weight: bold; cursor: not-allowed;">
+              <span class="error-msg"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="productCategory" class="form-label">Danh mục món *</label>
+              <select id="productCategory" class="form-select">
+                <option value="Cà phê">Cà phê</option>
+                <option value="Trà">Trà</option>
+                <option value="Sinh tố">Sinh tố</option>
+                <option value="Bánh">Bánh</option>
+              </select>
+              <span class="error-msg"></span>
+            </div>
+          </div>
+
+          <!-- Hàng 2: Tên món -->
+          <div class="form-group">
+            <label for="productName" class="form-label">Tên món đồ uống / bánh *</label>
+            <input type="text" id="productName" class="form-input" placeholder="Ví dụ: Bạc Xỉu Kem Muối, Trà Lài Sen...">
+            <span class="error-msg"></span>
+          </div>
+
+          <!-- Hàng 3: Giá bán & Trạng thái -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div class="form-group">
+              <label for="productPrice" class="form-label">Giá bán (VNĐ) *</label>
+              <input type="number" id="productPrice" class="form-input" placeholder="Ví dụ: 35000" min="1000" step="1000">
+              <span class="error-msg"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="productStatus" class="form-label">Trạng thái phục vụ *</label>
+              <select id="productStatus" class="form-select">
+                <option value="available">Còn hàng (Phục vụ)</option>
+                <option value="out_of_stock">Hết hàng (Tạm dừng)</option>
+              </select>
+              <span class="error-msg"></span>
+            </div>
+          </div>
+
+          <!-- Hàng 4: URL Hình ảnh và Xem trước ảnh (Live Preview) -->
+          <div class="form-group">
+            <label for="productImage" class="form-label">URL Hình ảnh món:</label>
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <div style="flex-grow: 1;">
+                <input type="url" id="productImage" class="form-input" placeholder="https://images.unsplash.com/... (để trống sẽ dùng ảnh mặc định)">
+                <span class="error-msg"></span>
+                <span style="font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; display: block;">Có thể dán link ảnh từ Unsplash hoặc bất kỳ link ảnh trực tuyến nào.</span>
+              </div>
+              <div class="preview-box" title="Ảnh xem trước">
+                <img id="previewImg" src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=100" alt="Preview">
+              </div>
+            </div>
+          </div>
+
+          <!-- Hàng 5: Mô tả món -->
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="productDesc" class="form-label">Mô tả hương vị / Thành phần:</label>
+            <textarea id="productDesc" class="form-textarea" rows="3" placeholder="Mô tả ngắn gọn về hương vị, thành phần nguyên liệu hoặc nguồn gốc..."></textarea>
+            <span class="error-msg"></span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancelModalBtn" class="btn btn-secondary">Hủy Bỏ</button>
+          <button type="submit" id="saveProductBtn" class="btn btn-primary">Lưu Thay Đổi</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="index.html" class="brand-logo">
+            <div class="logo-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                <line x1="6" y1="1" x2="6" y2="4"></line>
+                <line x1="10" y1="1" x2="10" y2="4"></line>
+                <line x1="14" y1="1" x2="14" y2="4"></line>
+              </svg>
+            </div>
+            <span>TULO COFFEE</span>
+          </a>
+          <p class="footer-desc">
+            Không gian cà phê ấm áp, gìn giữ nét văn hóa cà phê phin mộc mạc và nghệ thuật rang xay thủ công.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Khám Phá</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Trang Chủ</a></li>
+            <li><a href="menu.html">Thực Đơn</a></li>
+            <li><a href="index.html#about">Chuyện Nghề</a></li>
+            <li><a href="quanly.html">Trang Quản Trị</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Hệ Thống</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" onclick="document.getElementById('openAddModalBtn').click();">Thêm món mới</a></li>
+            <li><a href="javascript:void(0)" onclick="document.getElementById('exportJsonBtn').click();">Sao lưu dữ liệu (JSON)</a></li>
+            <li><a href="javascript:void(0)" onclick="document.getElementById('resetDataBtn').click();">Khôi phục mặc định</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Thông Tin Quản Trị</h4>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Dữ liệu lưu trữ độc lập trên từng trình duyệt.</p>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Hệ thống thuần HTML, CSS & JavaScript</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom flex-between">
+        <div>© 2026 Tulo Coffee House. Trang Quản Trị Dữ Liệu Thực Đơn.</div>
+        <div>Không sử dụng thư viện ngoài, tối ưu hiệu năng và trải nghiệm thủ công.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== GIỎ HÀNG DRAWER ==================== -->
+  <div id="cartDrawerOverlay" class="cart-drawer-overlay"></div>
+  <aside id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h3 style="font-family: var(--font-heading); font-size: 1.25rem; display: flex; align-items: center; gap: 8px;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span>Giỏ Hàng Của Bạn</span>
+      </h3>
+      <button type="button" id="closeCartBtn" class="btn-icon" aria-label="Đóng giỏ hàng">&times;</button>
+    </div>
+
+    <div id="cartItemsList" class="cart-items-list"></div>
+
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Tổng thanh toán:</span>
+        <span id="cartTotalPrice" style="color: var(--primary);">0 ₫</span>
+      </div>
+      <button type="button" id="checkoutBtn" class="btn btn-primary" style="width: 100%;">
+        Xác Nhận Đặt Món
+      </button>
+    </div>
+  </aside>
+
+  <!-- Container chứa Toast thông báo -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

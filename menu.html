@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thực Đơn Thức Uống & Bánh Ngọt - TULO COFFEE</title>
+  <meta name="description" content="Khám phá toàn bộ thực đơn cà phê mộc, trà thảo mộc, sinh tố trái cây nhiệt đới và bánh ngọt tươi mỗi ngày tại Tulo Coffee.">
+  
+  <!-- Phông chữ Google Fonts -->
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Chính -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==================== THANH ĐIỀU HƯỚNG ==================== -->
+  <header class="site-header">
+    <div class="container navbar">
+      <a href="index.html" class="brand-logo" title="Tulo Coffee Trang Chủ">
+        <div class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+            <line x1="6" y1="1" x2="6" y2="4"></line>
+            <line x1="10" y1="1" x2="10" y2="4"></line>
+            <line x1="14" y1="1" x2="14" y2="4"></line>
+          </svg>
+        </div>
+        <span>TULO COFFEE</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link">Trang Chủ</a></li>
+          <li><a href="menu.html" class="nav-link active">Thực Đơn</a></li>
+          <li><a href="index.html#about" class="nav-link">Chuyện Nghề</a></li>
+          <li><a href="index.html#contact" class="nav-link">Ghé Thăm</a></li>
+          <li><a href="quanly.html" class="nav-link" style="color: var(--accent);">Quản Trị</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" class="btn-icon theme-toggle-btn" title="Chuyển chế độ sáng/tối" aria-label="Đổi giao diện">
+          <span class="theme-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+        </button>
+
+        <button type="button" class="btn btn-primary btn-sm cart-btn cart-trigger-btn" aria-label="Xem giỏ hàng">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span>Giỏ Hàng</span>
+          <span class="cart-badge" style="display: none;">0</span>
+        </button>
+
+        <button type="button" class="btn-icon mobile-toggle" aria-label="Mở menu di động">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="section-padding">
+    <div class="container">
+      <!-- Tiêu đề trang -->
+      <div class="section-header">
+        <span class="section-subtitle">DANH MỤC PHỤC VỤ</span>
+        <h1 class="section-title">Thực Đơn Tulo Coffee</h1>
+        <p class="section-desc">Mọi món thức uống đều được pha chế từ nguyên liệu tươi mới, cân đối vị giác và tốt cho sức khỏe.</p>
+      </div>
+
+      <!-- ==================== THANH TÌM KIẾM VÀ BỘ LỌC ==================== -->
+      <section class="filter-bar" aria-label="Bộ lọc thực đơn">
+        <!-- Hàng tìm kiếm -->
+        <div class="search-row">
+          <div class="search-input-wrapper">
+            <span class="search-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+            <input type="text" id="menuSearchInput" class="form-input" placeholder="Tìm theo tên món (VD: bạc xỉu, trà đào, bơ, tiramisu)...">
+          </div>
+          <button type="button" id="clearSearchBtn" class="btn btn-secondary btn-sm" style="display: none;">
+            Xóa tìm kiếm
+          </button>
+        </div>
+
+        <!-- Các nút lọc danh mục & tùy chọn sắp xếp -->
+        <div class="filter-controls">
+          <!-- Pills danh mục -->
+          <div id="menuCategories" class="category-pills">
+            <!-- Render qua JavaScript -->
+          </div>
+
+          <!-- Nhóm chọn Lọc & Sắp xếp -->
+          <div class="select-group">
+            <select id="menuStatusSelect" class="form-select" style="min-width: 150px;" aria-label="Lọc theo trạng thái">
+              <option value="all">Mọi trạng thái</option>
+              <option value="available">Chỉ món còn hàng</option>
+            </select>
+
+            <select id="menuSortSelect" class="form-select" style="min-width: 170px;" aria-label="Sắp xếp theo">
+              <option value="default">Sắp xếp: Mặc định</option>
+              <option value="price-asc">Giá: Thấp đến Cao</option>
+              <option value="price-desc">Giá: Cao đến Thấp</option>
+              <option value="name-asc">Tên món: A - Z</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Dòng hiển thị số lượng kết quả tìm thấy -->
+        <div class="flex-between" style="font-size: 0.88rem; color: var(--text-muted); padding-top: 4px;">
+          <span id="searchResultCount">Đang tải danh sách món...</span>
+          <span>Tìm kiếm thông minh (hỗ trợ không dấu)</span>
+        </div>
+      </section>
+
+      <!-- ==================== LƯỚI CARD SẢN PHẨM ==================== -->
+      <section id="menuProductGrid" class="product-grid" aria-label="Danh sách món">
+        <!-- Render tự động bởi js/app.js -->
+      </section>
+    </div>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="index.html" class="brand-logo">
+            <div class="logo-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                <line x1="6" y1="1" x2="6" y2="4"></line>
+                <line x1="10" y1="1" x2="10" y2="4"></line>
+                <line x1="14" y1="1" x2="14" y2="4"></line>
+              </svg>
+            </div>
+            <span>TULO COFFEE</span>
+          </a>
+          <p class="footer-desc">
+            Không gian cà phê ấm áp, gìn giữ nét văn hóa cà phê phin mộc mạc và nghệ thuật rang xay thủ công.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Khám Phá</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Trang Chủ</a></li>
+            <li><a href="menu.html">Thực Đơn</a></li>
+            <li><a href="index.html#about">Chuyện Nghề</a></li>
+            <li><a href="quanly.html">Trang Quản Trị</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Danh Mục Đồ Uống</h4>
+          <ul class="footer-links">
+            <li><a href="menu.html">Cà phê Robusta & Arabica</a></li>
+            <li><a href="menu.html">Trà hoa quả giải nhiệt</a></li>
+            <li><a href="menu.html">Sinh tố bơ, xoài, dâu tây</a></li>
+            <li><a href="menu.html">Bánh Tiramisu, Croissant</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Giờ Phục Vụ</h4>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Thứ Hai - Chủ Nhật: 06:30 - 23:00</p>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Hotline: 0909 123 456</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom flex-between">
+        <div>© 2026 Tulo Coffee House. Giữ gìn hương vị cà phê mộc nguyên bản.</div>
+        <div>Phục vụ với trọn vẹn sự tận tâm và tình yêu hạt cà phê Việt.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== GIỎ HÀNG DRAWER ==================== -->
+  <div id="cartDrawerOverlay" class="cart-drawer-overlay"></div>
+  <aside id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h3 style="font-family: var(--font-heading); font-size: 1.25rem; display: flex; align-items: center; gap: 8px;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span>Giỏ Hàng Của Bạn</span>
+      </h3>
+      <button type="button" id="closeCartBtn" class="btn-icon" aria-label="Đóng giỏ hàng">&times;</button>
+    </div>
+
+    <div id="cartItemsList" class="cart-items-list">
+      <!-- app.js render -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Tổng thanh toán:</span>
+        <span id="cartTotalPrice" style="color: var(--primary);">0 ₫</span>
+      </div>
+      <button type="button" id="checkoutBtn" class="btn btn-primary" style="width: 100%;">
+        Xác Nhận Đặt Món
+      </button>
+    </div>
+  </aside>
+
+  <!-- Container chứa Toast thông báo -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

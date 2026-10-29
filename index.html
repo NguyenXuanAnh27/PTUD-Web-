@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TULO COFFEE - Hương Vị Cà Phê Nguyên Bản & Không Gian Ấm Áp</title>
+  <meta name="description"
+    content="Tulo Coffee mang đến trải nghiệm cà phê phin đậm đà, trà hoa quả tươi mát và bánh ngọt chuẩn vị trong không gian ấm áp, tinh tế.">
+
+  <!-- Phông chữ Google Fonts (Playfair Display & Plus Jakarta Sans) -->
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- CSS Chính -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- ==================== THANH ĐIỀU HƯỚNG (HEADER & NAVBAR) ==================== -->
+  <header class="site-header">
+    <div class="container navbar">
+      <!-- Logo thương hiệu Vintage -->
+      <a href="index.html" class="brand-logo" title="Tulo Coffee Trang Chủ">
+        <div class="logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+            <line x1="6" y1="1" x2="6" y2="4"></line>
+            <line x1="10" y1="1" x2="10" y2="4"></line>
+            <line x1="14" y1="1" x2="14" y2="4"></line>
+          </svg>
+        </div>
+        <span>TULO COFFEE</span>
+      </a>
+
+      <!-- Menu điều hướng chính -->
+      <nav>
+        <ul class="nav-menu">
+          <li><a href="index.html" class="nav-link active">Trang Chủ</a></li>
+          <li><a href="menu.html" class="nav-link">Thực Đơn</a></li>
+          <li><a href="index.html#about" class="nav-link">Chuyện Nghề</a></li>
+          <li><a href="index.html#contact" class="nav-link">Ghé Thăm</a></li>
+          <li><a href="quanly.html" class="nav-link" style="color: var(--accent);">Quản Trị</a></li>
+        </ul>
+      </nav>
+
+      <!-- Các nút tiện ích (Dark mode, Giỏ hàng, Menu di động) -->
+      <div class="nav-actions">
+        <!-- Nút đổi giao diện Sáng / Tối -->
+        <button type="button" class="btn-icon theme-toggle-btn" title="Chuyển chế độ sáng/tối"
+          aria-label="Đổi giao diện">
+          <span class="theme-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+        </button>
+
+        <!-- Nút mở giỏ hàng -->
+        <button type="button" class="btn btn-primary btn-sm cart-btn cart-trigger-btn" aria-label="Xem giỏ hàng">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span>Giỏ Hàng</span>
+          <span class="cart-badge" style="display: none;">0</span>
+        </button>
+
+        <!-- Nút menu mobile -->
+        <button type="button" class="btn-icon mobile-toggle" aria-label="Mở menu di động">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================== BANNER HERO VINTAGE ==================== -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="hero-eyebrow">EST. 2018 • RANG MỘC THỦ CÔNG</div>
+          <h1 class="hero-title">Nơi thời gian chậm lại bên tách cà phê <span>rang mộc</span>.</h1>
+          <p class="hero-description">
+            Chắt lọc tinh túy từ hạt Robusta Đắk Lắk đậm đà và Arabica Cầu Đất thơm nốt hoa trái. Tulo Coffee gìn giữ cách pha phin mộc mạc, cùng những mẻ bánh nướng thơm lừng trong không gian ấm cúng thân quen.
+          </p>
+          <div class="hero-cta">
+            <a href="menu.html" class="btn btn-primary">Khám Phá Thực Đơn</a>
+            <a href="#about" class="btn btn-secondary">Chuyện Nghề Của Quán</a>
+          </div>
+        </div>
+
+        <div class="hero-image-wrapper">
+          <div class="hero-image-frame">
+            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80"
+              alt="Không gian quán Tulo Coffee" class="hero-image">
+          </div>
+          <div class="vintage-stamp">
+            <div class="vintage-stamp-inner">
+              <svg class="vintage-stamp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                <line x1="6" y1="1" x2="6" y2="4"/>
+                <line x1="10" y1="1" x2="10" y2="4"/>
+                <line x1="14" y1="1" x2="14" y2="4"/>
+              </svg>
+              <div>
+                <h4>100% Cà Phê Mộc</h4>
+                <p>Rang mẻ nhỏ • Không tẩm ướp</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GIỚI THIỆU QUÁN - EDITORIAL STORY ==================== -->
+    <section id="about" class="section-padding">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">CHUYỆN NGHỀ & KHÔNG GIAN</span>
+          <h2 class="section-title">Góc Hoài Niệm Giữa Lòng Thành Phố</h2>
+          <p class="section-desc">Chúng tôi tin một tách cà phê ngon không cần vội vã. Đó là nhịp thở chậm rãi để bạn tìm lại sự an yên và kết nối cùng tri kỷ.</p>
+        </div>
+
+        <div class="story-editorial-grid">
+          <div class="story-visual-collage">
+            <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80"
+              alt="Pha cà phê phin thủ công" class="story-photo-main">
+            <div class="story-quote-card">
+              <div class="story-quote-mark">“</div>
+              <p>Cà phê ngon tựa như câu chuyện cũ, càng chậm rãi thưởng thức lại càng thấm đượm.</p>
+            </div>
+          </div>
+
+          <div class="story-content">
+            <div class="story-pillars">
+              <div class="pillar-item">
+                <div class="pillar-num">01</div>
+                <div class="pillar-body">
+                  <h4>Hạt Mộc Thuần Khiết</h4>
+                  <p>Hạt cà phê hái chín thủ công từ các nông hộ Đắk Lắk và Lâm Đồng. Rang mộc theo mẻ nhỏ hàng tuần nhằm lưu giữ trọn vẹn hương vị tự nhiên của đất trời.</p>
+                </div>
+              </div>
+
+              <div class="pillar-item">
+                <div class="pillar-num">02</div>
+                <div class="pillar-body">
+                  <h4>Kỹ Thuật Nhỏ Giọt Chậm Rãi</h4>
+                  <p>Từ ly cà phê phin truyền thống cho đến bình pour-over, Barista luôn tỉ mỉ từ độ mịn của bột đến nhiệt độ nước 92°C để đạt độ chiết xuất cân bằng nhất.</p>
+                </div>
+              </div>
+
+              <div class="pillar-item">
+                <div class="pillar-num">03</div>
+                <div class="pillar-body">
+                  <h4>Không Gian Mộc Mạc & Tĩnh Lặng</h4>
+                  <p>Tone màu gỗ sồi trầm, ánh đèn vàng dịu nhẹ cùng giai điệu êm đềm — chốn dừng chân lý tưởng để bạn đọc sách, làm việc hay lắng lòng sau một ngày dài.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MENU NỔI BẬT ==================== -->
+    <section class="section-padding" style="background-color: var(--bg-surface-alt);">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-subtitle">HƯƠNG VỊ GỢI Ý</span>
+          <h2 class="section-title">Món Ngon Thân Thuộc</h2>
+          <p class="section-desc">Khám phá những món thức uống rang mộc và mẻ bánh thơm được thực khách yêu chuộng nhất tại Tulo Coffee.</p>
+        </div>
+
+        <!-- Lưới sản phẩm động do JavaScript kết xuất -->
+        <div id="featuredMenuGrid" class="product-grid">
+          <!-- Nội dung do app.js render tự động -->
+        </div>
+
+        <div class="text-center" style="margin-top: 48px;">
+          <a href="menu.html" class="btn btn-outline">Xem Toàn Bộ Thực Đơn (14+ Món)</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== GIỜ MỞ CỬA & FORM LIÊN HỆ ==================== -->
+    <section id="contact" class="section-padding">
+      <div class="container">
+        <div class="info-contact-grid">
+          <!-- Thông tin & Giờ mở cửa -->
+          <div class="info-card">
+            <span class="section-subtitle">THỜI GIAN PHỤC VỤ</span>
+            <h3>Giờ Mở Cửa & Địa Điểm</h3>
+            <p style="color: var(--text-muted); margin-bottom: 24px;">Hãy ghé Tulo Coffee để tận hưởng không gian thơm
+              mùi cà phê bất kỳ ngày nào trong tuần.</p>
+
+            <ul class="schedule-list">
+              <li>
+                <span>Thứ Hai - Thứ Sáu:</span>
+                <strong>06:30 - 22:30</strong>
+              </li>
+              <li>
+                <span>Thứ Bảy - Chủ Nhật:</span>
+                <strong>07:00 - 23:00</strong>
+              </li>
+              <li>
+                <span>Các ngày Lễ / Tết:</span>
+                <strong>Phục vụ xuyên suốt</strong>
+              </li>
+            </ul>
+
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+              </div>
+              <div>
+                <strong>Địa chỉ quán:</strong>
+                <p style="color: var(--text-muted);">Vạn Phúc Building, Đường Tố Hữu, Quận Hà Đông, Hà Nội</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">
+                <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                </svg>
+              </div>
+              <div>
+                <strong>Hotline đặt bàn & giao hàng:</strong>
+                <p style="color: var(--primary); font-weight: 700;">0909 123 456</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Form liên hệ & Đặt bàn -->
+          <div class="contact-card">
+            <span class="section-subtitle">KẾT NỐI VỚI CHÚNG TÔI</span>
+            <h3>Gửi Tin Nhắn / Đặt Bàn</h3>
+
+            <form id="contactForm" novalidate>
+              <div class="form-group">
+                <label for="contactName" class="form-label">Họ và tên của bạn *</label>
+                <input type="text" id="contactName" class="form-input" placeholder="Họ và tên của bạn">
+                <span class="error-msg"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="contactPhone" class="form-label">Số điện thoại *</label>
+                <input type="tel" id="contactPhone" class="form-input" placeholder="Số điện thoại liên hệ">
+                <span class="error-msg"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="contactMessage" class="form-label">Lời nhắn hoặc yêu cầu đặt bàn *</label>
+                <textarea id="contactMessage" class="form-textarea" rows="4"
+                  placeholder="Thời gian ghé quán, số lượng khách hoặc lời nhắn gửi tiệm..."></textarea>
+                <span class="error-msg"></span>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%;">Gửi Lời Nhắn Đặt Bàn</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="index.html" class="brand-logo">
+            <div class="logo-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
+                <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
+                <line x1="6" y1="1" x2="6" y2="4"></line>
+                <line x1="10" y1="1" x2="10" y2="4"></line>
+                <line x1="14" y1="1" x2="14" y2="4"></line>
+              </svg>
+            </div>
+            <span>TULO COFFEE</span>
+          </a>
+          <p class="footer-desc">
+            Không gian cà phê ấm áp, gìn giữ nét văn hóa cà phê phin mộc mạc và nghệ thuật rang xay thủ công.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Khám Phá</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Trang Chủ</a></li>
+            <li><a href="menu.html">Thực Đơn</a></li>
+            <li><a href="index.html#about">Chuyện Nghề</a></li>
+            <li><a href="quanly.html">Trang Quản Trị</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Danh Mục</h4>
+          <ul class="footer-links">
+            <li><a href="menu.html">Cà phê rang mộc</a></li>
+            <li><a href="menu.html">Trà hoa quả thanh mát</a></li>
+            <li><a href="menu.html">Sinh tố bổ dưỡng</a></li>
+            <li><a href="menu.html">Bánh nướng mỗi ngày</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Theo Dõi Quán</h4>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">Đăng ký nhận ưu đãi & thông tin mẻ hạt mới mỗi tuần.</p>
+          <div style="display: flex; gap: 8px;">
+            <input type="email" placeholder="Email của bạn..." class="form-input"
+              style="padding: 8px 12px; font-size: 0.88rem;">
+            <button class="btn btn-primary btn-sm"
+              onclick="showToast('Cảm ơn bạn đã đăng ký nhận tin!', 'success')">Gửi</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom flex-between">
+        <div>© 2026 Tulo Coffee House. Giữ gìn hương vị cà phê mộc nguyên bản.</div>
+        <div>Phục vụ với trọn vẹn sự tận tâm và tình yêu hạt cà phê Việt.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== GIỎ HÀNG DRAWER (TÍNH NĂNG MỞ RỘNG) ==================== -->
+  <div id="cartDrawerOverlay" class="cart-drawer-overlay"></div>
+  <aside id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h3 style="font-family: var(--font-heading); font-size: 1.25rem; display: flex; align-items: center; gap: 8px;">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span>Giỏ Hàng Của Bạn</span>
+      </h3>
+      <button type="button" id="closeCartBtn" class="btn-icon" aria-label="Đóng giỏ hàng">&times;</button>
+    </div>
+
+    <!-- Danh sách món trong giỏ -->
+    <div id="cartItemsList" class="cart-items-list">
+      <!-- Do app.js render -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Tổng thanh toán:</span>
+        <span id="cartTotalPrice" style="color: var(--primary);">0 ₫</span>
+      </div>
+      <button type="button" id="checkoutBtn" class="btn btn-primary" style="width: 100%;">
+        Xác Nhận Đặt Món
+      </button>
+    </div>
+  </aside>
+
+  <!-- Container chứa Toast thông báo -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

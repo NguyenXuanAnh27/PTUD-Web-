@@ -1,9 +1,14 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="vi" data-theme="light">
+=======
+<html lang="vi">
+>>>>>>> 70b49e888334766083c19e9b00d1f91b0278e947
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
   <title>TULO COFFEE - Hương Vị Cà Phê Nguyên Bản & Không Gian Ấm Áp</title>
   <meta name="description"
     content="Tulo Coffee mang đến trải nghiệm cà phê phin đậm đà, trà hoa quả tươi mát và bánh ngọt chuẩn vị trong không gian ấm áp, tinh tế.">
@@ -18,10 +23,25 @@
 
   <!-- CSS Chính -->
   <link rel="stylesheet" href="css/style.css">
+=======
+  <title>TULO Coffee Admin - Quản Lý Thực Đơn & Kho Hàng</title>
+  <meta name="description"
+    content="Hệ thống quản lý thực đơn, kho hàng và doanh số đồ uống quán cà phê TULO Coffee Dashboard.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+>>>>>>> 70b49e888334766083c19e9b00d1f91b0278e947
 </head>
 
 <body>
 
+<<<<<<< HEAD
   <!-- ==================== THANH ĐIỀU HƯỚNG (HEADER & NAVBAR) ==================== -->
   <header class="site-header">
     <div class="container navbar">
@@ -29,6 +49,21 @@
       <a href="index.html" class="brand-logo" title="Tulo Coffee Trang Chủ">
         <div class="logo-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+=======
+  <!-- TOAST CONTAINER -->
+  <div id="toastContainer" class="toast-container" role="region" aria-live="polite"></div>
+
+  <!-- MAIN APP WRAPPER -->
+  <div class="app-wrapper">
+
+    <!-- HEADER & BRAND -->
+    <header class="dashboard-header">
+      <div class="brand-section">
+        <div class="brand-logo-badge" title="TULO Coffee">
+          <!-- Coffee Cup Icon -->
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+>>>>>>> 70b49e888334766083c19e9b00d1f91b0278e947
             <path d="M18 8h1a4 4 0 0 1 0 8h-1"></path>
             <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path>
             <line x1="6" y1="1" x2="6" y2="4"></line>
@@ -36,6 +71,7 @@
             <line x1="14" y1="1" x2="14" y2="4"></line>
           </svg>
         </div>
+<<<<<<< HEAD
         <span>TULO COFFEE</span>
       </a>
 
@@ -378,6 +414,503 @@
   <!-- Scripts -->
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
+=======
+        <div class="brand-text">
+          <h1>TULO COFFEE <span class="tag-pro">ADMIN</span></h1>
+          <p>Hệ thống Quản lý Thực đơn & Kho Quán Cà Phê Chuyên Nghiệp</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Dark/Light Mode Toggle -->
+        <button id="themeToggleBtn" class="btn btn-outline btn-icon-only" title="Đổi Chế độ Sáng / Tối"
+          aria-label="Đổi giao diện">
+          <svg id="themeIconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+
+        <!-- Restore Default Data Button -->
+        <button id="resetDataBtn" class="btn btn-outline" title="Khôi phục lại 6 món mẫu ban đầu">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <polyline points="23 20 23 14 17 14"></polyline>
+            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+          </svg>
+          <span>Khôi phục mẫu</span>
+        </button>
+
+        <!-- Export CSV Button -->
+        <button id="exportCsvBtn" class="btn btn-outline" title="Xuất dữ liệu thực đơn ra file CSV (Excel)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Xuất CSV (Excel)</span>
+        </button>
+
+        <!-- Add Item Button -->
+        <button id="openAddModalBtn" class="btn btn-primary" title="Thêm món đồ uống hoặc bánh mới">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Thêm Món Mới</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 4 SUMMARY CARDS -->
+    <section class="stats-grid" aria-label="Thống kê thực đơn">
+      <!-- Card 1: Tổng số món -->
+      <article class="stat-card total">
+        <div class="stat-icon-wrapper">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18" />
+            <path d="M18 17V9" />
+            <path d="M13 17V5" />
+            <path d="M8 17v-3" />
+          </svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">Tổng số món</div>
+          <div id="statTotalItems" class="stat-number">0</div>
+          <div class="stat-subtext">Trong thực đơn quán</div>
+        </div>
+      </article>
+
+      <!-- Card 2: Đang bán (Còn hàng) -->
+      <article class="stat-card active">
+        <div class="stat-icon-wrapper">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">Số món đang bán</div>
+          <div id="statInStock" class="stat-number">0</div>
+          <div class="stat-subtext">Sẵn sàng phục vụ khách</div>
+        </div>
+      </article>
+
+      <!-- Card 3: Hết hàng -->
+      <article class="stat-card out">
+        <div class="stat-icon-wrapper">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">Số món hết hàng</div>
+          <div id="statOutStock" class="stat-number">0</div>
+          <div class="stat-subtext">Cần nhập thêm nguyên liệu</div>
+        </div>
+      </article>
+
+      <!-- Card 4: Tổng giá trị hàng tồn -->
+      <article class="stat-card value">
+        <div class="stat-icon-wrapper">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"></line>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <div class="stat-label">Tổng giá trị kho tồn</div>
+          <div id="statInventoryValue" class="stat-number">0 đ</div>
+          <div class="stat-subtext">Giá bán × Số lượng tồn</div>
+        </div>
+      </article>
+    </section>
+
+    <!-- SEARCH, FILTER & SORT PANEL -->
+    <section class="controls-panel" aria-label="Bộ lọc và tìm kiếm">
+      <div class="controls-grid">
+        <!-- Search Input -->
+        <div class="search-box-wrapper">
+          <div class="search-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <input type="text" id="searchInput" class="search-input" placeholder="Tìm theo tên món hoặc mã món..."
+            autocomplete="off">
+          <button id="clearSearchBtn" class="clear-search-btn" title="Xóa tìm kiếm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Category Filter -->
+        <div>
+          <select id="categoryFilter" class="select-control" style="width: 100%;">
+            <option value="ALL">Tất cả danh mục</option>
+            <option value="Cà phê">Cà phê</option>
+            <option value="Trà">Trà</option>
+            <option value="Bánh ngọt">Bánh ngọt</option>
+          </select>
+        </div>
+
+        <!-- Status Filter -->
+        <div>
+          <select id="statusFilter" class="select-control" style="width: 100%;">
+            <option value="ALL">Tất cả trạng thái</option>
+            <option value="Còn hàng">Còn hàng</option>
+            <option value="Hết hàng">Hết hàng</option>
+          </select>
+        </div>
+
+        <!-- Sort Select -->
+        <div>
+          <select id="sortSelect" class="select-control" style="width: 100%;">
+            <option value="default">Sắp xếp: Mới nhất</option>
+            <option value="price-asc">Giá: Thấp đến Cao</option>
+            <option value="price-desc">Giá: Cao đến Thấp</option>
+            <option value="name-asc">Tên: A đến Z</option>
+            <option value="name-desc">Tên: Z đến A</option>
+            <option value="stock-desc">Tồn kho: Nhiều nhất</option>
+            <option value="stock-asc">Tồn kho: Ít nhất</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="controls-footer">
+        <div class="filter-tags">
+          <span>Kết quả hiển thị:</span>
+          <span id="filteredCountBadge" class="count-badge">0 / 0 món</span>
+        </div>
+        <button id="resetFiltersBtn" class="reset-filters-btn">Đặt lại toàn bộ lọc</button>
+      </div>
+    </section>
+
+    <!-- MENU LIST TABLE -->
+    <main class="table-container">
+      <div class="table-responsive">
+        <table class="menu-table">
+          <thead>
+            <tr>
+              <th style="width: 70px;">Mã Món</th>
+              <th style="min-width: 220px;">Hình Ảnh & Tên Món</th>
+              <th>Danh Mục</th>
+              <th>Giá Bán</th>
+              <th>Tồn Kho</th>
+              <th>Trạng Thái</th>
+              <th style="text-align: right; width: 110px;">Hành Động</th>
+            </tr>
+          </thead>
+          <tbody id="menuTableBody">
+            <!-- Dynamic rows will be inserted here -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- EMPTY STATE -->
+      <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="empty-icon-wrapper">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <h3>Không tìm thấy món nào!</h3>
+        <p>Không có sản phẩm nào khớp với tiêu chí tìm kiếm hoặc bộ lọc hiện tại của bạn.</p>
+        <button id="emptyResetBtn" class="btn btn-outline">Xóa bộ lọc & Hiển thị tất cả</button>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="dashboard-footer">
+      <p>© 2026 TULO Coffee Admin Dashboard. Xây dựng bằng HTML5, CSS3 & Vanilla JavaScript thuần.</p>
+    </footer>
+
+  </div><!-- /app-wrapper -->
+
+  <!-- ==========================================================================
+       MODAL FORM (THÊM MỚI / CHỈNH SỬA MÓN)
+       ========================================================================== -->
+  <div id="itemModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h2 id="modalTitle">
+          <span id="modalIcon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 5v14M5 12h14"></path>
+            </svg>
+          </span>
+          <span id="modalTitleText">Thêm Món Mới</span>
+        </h2>
+        <button id="closeModalBtn" class="modal-close-btn" title="Đóng cửa sổ">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Form Body -->
+      <form id="itemForm" class="modal-body" novalidate>
+        <!-- Row 1: Code and Name -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="itemIdInput" class="form-label">Mã món <span class="req">*</span></label>
+            <input type="text" id="itemIdInput" class="form-input" placeholder="VD: CF001, TR002..." required>
+            <div id="errorId" class="error-msg">Mã món không được để trống hoặc trùng lặp</div>
+            <div class="field-hint">Mã định danh duy nhất của sản phẩm</div>
+          </div>
+
+          <div class="form-group">
+            <label for="itemCategoryInput" class="form-label">Danh mục <span class="req">*</span></label>
+            <select id="itemCategoryInput" class="form-select" required>
+              <option value="Cà phê">Cà phê</option>
+              <option value="Trà">Trà</option>
+              <option value="Bánh ngọt">Bánh ngọt</option>
+            </select>
+            <div id="errorCategory" class="error-msg">Vui lòng chọn danh mục</div>
+          </div>
+        </div>
+
+        <!-- Name -->
+        <div class="form-group">
+          <label for="itemNameInput" class="form-label">Tên món <span class="req">*</span></label>
+          <input type="text" id="itemNameInput" class="form-input" placeholder="VD: Cà Phê Muối Xứ Huế..." required>
+          <div id="errorName" class="error-msg">Tên món không được để trống (tối thiểu 2 ký tự)</div>
+        </div>
+
+        <!-- Row 2: Price & Quantity -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="itemPriceInput" class="form-label">Giá bán (VNĐ) <span class="req">*</span></label>
+            <input type="number" id="itemPriceInput" class="form-input" placeholder="VD: 35000" min="1000" step="1000"
+              required>
+            <div id="errorPrice" class="error-msg">Giá bán phải lớn hơn 0 VNĐ</div>
+          </div>
+
+          <div class="form-group">
+            <label for="itemQuantityInput" class="form-label">Số lượng tồn kho <span class="req">*</span></label>
+            <input type="number" id="itemQuantityInput" class="form-input" placeholder="VD: 20" min="0" step="1"
+              required>
+            <div id="errorQuantity" class="error-msg">Số lượng tồn kho không được âm</div>
+            <div class="field-hint">Nhập 0 hệ thống sẽ tự đặt "Hết hàng"</div>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="form-group">
+          <label for="itemStatusInput" class="form-label">Trạng thái phục vụ <span class="req">*</span></label>
+          <select id="itemStatusInput" class="form-select" required>
+            <option value="Còn hàng">Còn hàng</option>
+            <option value="Hết hàng">Hết hàng</option>
+          </select>
+          <div id="errorStatus" class="error-msg">Vui lòng chọn trạng thái</div>
+        </div>
+
+        <!-- Image URL -->
+        <div class="form-group">
+          <label for="itemImageInput" class="form-label">Link hình ảnh (URL)</label>
+          <input type="url" id="itemImageInput" class="form-input" placeholder="https://images.unsplash.com/...">
+          <div id="errorImage" class="error-msg">Vui lòng nhập định dạng URL hợp lệ</div>
+
+          <!-- Live Image Preview Box -->
+          <div class="image-preview-wrapper">
+            <div class="image-preview-box">
+              <img id="formImagePreview" src="" alt="Xem trước"
+                onerror="this.src='https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=150';">
+            </div>
+            <div class="image-preview-text">
+              <strong>Xem trước hình ảnh:</strong><br>
+              Ảnh sẽ tự cập nhật khi bạn dán link URL vào ô trên.
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" id="cancelModalBtn" class="btn btn-outline">Hủy bỏ</button>
+        <button type="button" id="saveItemBtn" class="btn btn-primary">Lưu Thay Đổi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       DELETE CONFIRMATION MODAL
+       ========================================================================== -->
+  <div id="deleteModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-box confirm-modal-box">
+      <div class="confirm-icon-box">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          <line x1="10" y1="11" x2="10" y2="17"></line>
+          <line x1="14" y1="11" x2="14" y2="17"></line>
+        </svg>
+      </div>
+      <h3>Xác nhận xóa món</h3>
+      <p>Bạn có chắc chắn muốn xóa <span id="deleteItemName" class="confirm-item-name">món này</span> khỏi thực đơn?
+        Hành động này không thể hoàn tác.</p>
+      <div class="confirm-actions">
+        <button id="cancelDeleteBtn" class="btn btn-outline">Hủy bỏ</button>
+        <button id="confirmDeleteBtn" class="btn btn-danger-outline"
+          style="background-color: var(--danger); color: #fff;">Xóa ngay</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       RESET DATA CONFIRMATION MODAL
+       ========================================================================== -->
+  <div id="resetConfirmModal" class="modal-overlay" role="dialog" aria-modal="true">
+    <div class="modal-box confirm-modal-box">
+      <div class="confirm-icon-box" style="background: var(--warning-light); color: var(--warning);">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </div>
+      <h3>Khôi phục dữ liệu mẫu?</h3>
+      <p>Hệ thống sẽ nạp lại 6 món cà phê, trà và bánh ngọt mặc định ban đầu. Mọi thay đổi hiện tại sẽ được thay thế.
+      </p>
+      <div class="confirm-actions">
+        <button id="cancelResetBtn" class="btn btn-outline">Hủy bỏ</button>
+        <button id="confirmResetBtn" class="btn btn-primary">Đồng ý khôi phục</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       VIEW DETAIL MODAL (XEM CHI TIẾT MÓN)
+       ========================================================================== -->
+  <div id="viewModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Xem chi tiết món">
+    <div class="modal-box" style="max-width:520px;">
+      <div class="modal-header">
+        <h2>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          Chi Tiết Sản Phẩm
+        </h2>
+        <button id="closeViewModalBtn" class="modal-close-btn" title="Đóng">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body" style="padding:0;">
+        <!-- Ảnh lớn -->
+        <div style="width:100%;height:220px;overflow:hidden;background:var(--bg-subtle);">
+          <img id="viewImg" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:block;"
+            onerror="this.src='https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600';">
+        </div>
+
+        <!-- Thông tin chi tiết -->
+        <div style="padding:1.5rem;">
+          <h3 id="viewName"
+            style="font-size:1.3rem;font-weight:800;color:var(--text-main);margin-bottom:0.75rem;line-height:1.3;"></h3>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <!-- Mã món -->
+            <div
+              style="background:var(--bg-subtle);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:0.875rem;">
+              <div
+                style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.4rem;">
+                Mã món</div>
+              <div id="viewId" style="font-family:monospace;font-size:1rem;font-weight:700;color:var(--text-main);">
+              </div>
+            </div>
+
+            <!-- Danh mục -->
+            <div
+              style="background:var(--bg-subtle);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:0.875rem;">
+              <div
+                style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.4rem;">
+                Danh mục</div>
+              <span id="viewCategory" class="category-badge"></span>
+            </div>
+
+            <!-- Giá bán -->
+            <div
+              style="background:var(--bg-subtle);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:0.875rem;">
+              <div
+                style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.4rem;">
+                Giá bán</div>
+              <div id="viewPrice" style="font-size:1.1rem;font-weight:800;color:var(--primary);"></div>
+            </div>
+
+            <!-- Tồn kho -->
+            <div
+              style="background:var(--bg-subtle);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:0.875rem;">
+              <div
+                style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.4rem;">
+                Tồn kho</div>
+              <div id="viewQuantity" style="font-size:1.1rem;font-weight:800;"></div>
+            </div>
+
+            <!-- Trạng thái -->
+            <div
+              style="background:var(--bg-subtle);border:1px solid var(--border-color);border-radius:var(--radius-md);padding:0.875rem;">
+              <div
+                style="font-size:0.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.4rem;">
+                Trạng thái</div>
+              <span id="viewStatus" class="status-badge"></span>
+            </div>
+
+            <!-- Tổng giá trị tồn -->
+            <div
+              style="background:linear-gradient(135deg,rgba(217,119,6,0.12),rgba(146,64,14,0.08));border:1px solid rgba(217,119,6,0.3);border-radius:var(--radius-md);padding:0.875rem;">
+              <div
+                style="font-size:0.75rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.4rem;">
+                Tổng giá trị tồn</div>
+              <div id="viewTotalValue" style="font-size:1.1rem;font-weight:800;color:var(--primary);"></div>
+              <div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.2rem;">Giá × Số lượng</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="editFromViewBtn" class="btn btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+          Chỉnh Sửa Món Này
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- External JavaScript Logic -->
+  <script src="script.js"></script>
+>>>>>>> 70b49e888334766083c19e9b00d1f91b0278e947
 </body>
 
 </html>

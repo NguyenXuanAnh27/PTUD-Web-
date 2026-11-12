@@ -1,0 +1,17 @@
+# Dependencies & Env
+node_modules/
+.env
+.env.local
+.env.*.local
+
+# Logs & Coverage
+*.log
+npm-debug.log*
+coverage/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+

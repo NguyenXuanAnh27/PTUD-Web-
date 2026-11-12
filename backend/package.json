@@ -1,0 +1,41 @@
+{
+  "name": "tulo-coffee-backend",
+  "version": "1.0.0",
+  "description": "Backend RESTful API cho Hệ thống Quản lý Quán Cà phê Tulo Coffee (PROG2008)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest --runInBand --forceExit"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mssql",
+    "jwt",
+    "tulo-coffee",
+    "rest-api"
+  ],
+  "author": "Tulo Coffee Team",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "express-validator": "^7.2.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "mssql": "^11.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0"
+  },
+  "optionalDependencies": {
+    "msnodesqlv8": "^6.2.2"
+  }
+}

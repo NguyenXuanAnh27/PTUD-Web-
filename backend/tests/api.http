@@ -1,0 +1,109 @@
+@baseUrl = http://localhost:5000/api
+@adminToken = PASTE_ADMIN_JWT_HERE
+@customerToken = PASTE_CUSTOMER_JWT_HERE
+
+### 1. Health Check
+GET {{baseUrl}}/health
+
+### 2. Đăng ký tài khoản mới (Customer)
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "newcustomer01",
+  "email": "newcustomer01@tulocoffee.vn",
+  "password": "User@123",
+  "fullName": "Lê Minh Tuấn",
+  "phone": "0903334445"
+}
+
+### 3. Đăng nhập Admin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "usernameOrEmail": "admin",
+  "password": "Admin@123"
+}
+
+### 4. Đăng nhập Customer
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "usernameOrEmail": "khachhang1",
+  "password": "User@123"
+}
+
+### 5. Xem thông tin cá nhân
+GET {{baseUrl}}/users/me
+Authorization: Bearer {{customerToken}}
+
+### 6. Cập nhật hồ sơ cá nhân
+PUT {{baseUrl}}/users/me
+Authorization: Bearer {{customerToken}}
+Content-Type: application/json
+
+{
+  "fullName": "Nguyễn Minh Anh (Đã cập nhật)",
+  "phone": "0912345679"
+}
+
+### 7. Danh sách sản phẩm (Tìm kiếm + Lọc + Phân trang)
+GET {{baseUrl}}/products?keyword=Cà phê&category=Cà phê&status=available&page=1&limit=5
+
+### 8. Chi tiết 1 sản phẩm
+GET {{baseUrl}}/products/1
+
+### 9. Thêm sản phẩm mới (Admin)
+POST {{baseUrl}}/products
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Matcha Latte Kem Trứng",
+  "categoryId": 2,
+  "price": 49000,
+  "status": "available",
+  "description": "Matcha Nhật Bản hòa quyện kem trứng béo mịn."
+}
+
+### 10. Đặt đơn hàng mới (Customer - Transaction)
+POST {{baseUrl}}/orders
+Authorization: Bearer {{customerToken}}
+Content-Type: application/json
+
+{
+  "customerName": "Nguyễn Minh Anh",
+  "customerPhone": "0912345678",
+  "note": "Ít đường, nhiều đá",
+  "items": [
+    { "productId": 1, "quantity": 2 },
+    { "productId": 13, "quantity": 1 }
+  ]
+}
+
+### 11. Xem đơn hàng của tôi (Customer)
+GET {{baseUrl}}/orders/my-orders?page=1&limit=5
+Authorization: Bearer {{customerToken}}
+
+### 12. Xem thống kê tổng quan (Admin)
+GET {{baseUrl}}/statistics/overview
+Authorization: Bearer {{adminToken}}
+
+### 13. Doanh thu theo tháng (Admin)
+GET {{baseUrl}}/statistics/revenue?year=2026
+Authorization: Bearer {{adminToken}}
+
+### 14. Top món bán chạy (Admin)
+GET {{baseUrl}}/statistics/top-products?limit=5
+Authorization: Bearer {{adminToken}}
+
+### 15. Phân bổ theo danh mục (Admin)
+GET {{baseUrl}}/statistics/category-distribution
+Authorization: Bearer {{adminToken}}
+
+### 16. Đăng xuất (Blacklist token)
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{customerToken}}
+

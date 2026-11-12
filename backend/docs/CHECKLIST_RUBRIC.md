@@ -1,0 +1,12 @@
+# Bảng Tự Đối Chiếu Rubric Chấm Điểm – Backend (PROG2008)
+
+| Tiêu chí Rubric | Trọng số | Minh chứng thực tế trong code | Trạng thái |
+|----------------|----------|-------------------------------|------------|
+| **1. Phân tích bài toán, thiết kế hệ thống** | 1,0đ | `docs/UseCase.md`, `docs/ARCHITECTURE.md`, `docs/API.md` (30 endpoints phân tầng rõ ràng) | ✅ Đạt |
+| **2. Thiết kế & tổ chức CSDL** | 1,0đ | `database/schema.sql` (6 bảng chuẩn 3NF: `Users`, `TokenBlacklist`, `Categories`, `Products`, `Orders`, `OrderDetails`), PK/FK/UNIQUE/CHECK/DEFAULT/INDEX, `database/seed.sql` (3 users, 4 danh mục, 16 món, 10 đơn hàng), `docs/ERD.md` | ✅ Đạt |
+| **3. Xử lý Backend & RESTful API** | 1,5đ | Kiến trúc phân tầng `routes → validators → controllers → services → repositories`; response thống nhất `{ success, message, data }` qua `src/utils/responseHelper.js`; xử lý lỗi tập trung `src/middlewares/errorHandler.js`; status code chuẩn (200, 201, 400, 401, 403, 404, 409, 500); `docs/API.md` + `tests/api.http` + `tests/postman_collection.json` | ✅ Đạt |
+| **4. Chức năng nghiệp vụ & CRUD** | 1,5đ | CRUD thật xuống SQL Server cho Categories, Products (xóa mềm `IsDeleted`), Orders; tìm kiếm `?keyword=` trên nhiều trường (`Name`, `Code`, `Description`); lọc `?category=`, `?status=`, `?from=&to=`; phân trang `?page=&limit=` trả `{ data, pagination }`; **Transaction** tạo đơn + chi tiết trong `src/repositories/order.repository.js`; **5 API thống kê** dùng `GROUP BY` thật trong `src/repositories/statistic.repository.js` | ✅ Đạt |
+| **5. Đăng nhập, phân quyền & bảo mật** | 1,0đ | Mật khẩu băm `bcryptjs` (salt rounds = 10); JWT + bảng `TokenBlacklist` khi logout; 2 vai trò `admin` & `customer` qua `authenticate` + `authorize`; kiểm tra ownership (`order.service.js` ngăn customer xem/hủy đơn người khác); validate bằng `express-validator` trả lỗi theo từng field; `.env` + `.env.example` + `.gitignore`; chống SQL Injection bằng `@param`; bật `helmet`, `cors`, `express-rate-limit` cho login | ✅ Đạt |
+| **6. Báo cáo & tài liệu** | 1,0đ | Đầy đủ `README.md`, `docs/API.md`, `docs/ERD.md`, `docs/UseCase.md`, `docs/ARCHITECTURE.md`, `docs/CHECKLIST_RUBRIC.md`, `docs/QA_VAN_DAP.md` | ✅ Đạt |
+| **7. Thuyết trình, demo, vấn đáp** | 1,0đ | Dữ liệu seed đầy đủ + 3 tài khoản demo (`admin`, `khachhang1`, `khachhang2`); comment tiếng Việt tại các đoạn nghiệp vụ/bảo mật; bộ test tự động `tests/api.test.js` + `docs/QA_VAN_DAP.md` (20 câu hỏi) | ✅ Đạt |
+

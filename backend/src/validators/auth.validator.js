@@ -42,7 +42,12 @@ const loginValidator = [
   body('usernameOrEmail')
     .trim()
     .notEmpty()
-    .withMessage('Vui lòng nhập tên đăng nhập hoặc email'),
+    .withMessage('Vui lòng nhập tên đăng nhập hoặc email')
+    // Email lúc đăng ký đã được normalizeEmail() (vd: A.B@gmail.com -> ab@gmail.com),
+    // nên lúc đăng nhập cũng phải chuẩn hóa tương tự thì mới khớp với dữ liệu đã lưu.
+    // Username không chứa ký tự "@" nên không bị ảnh hưởng.
+    .if(body('usernameOrEmail').isEmail())
+    .normalizeEmail(),
 
   body('password')
     .notEmpty()

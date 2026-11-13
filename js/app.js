@@ -119,7 +119,7 @@ function showToast(message, type = 'success') {
   toast.innerHTML = `
     <div class="toast-content">
       <span style="display:inline-flex;align-items:center;">${iconMap[type] || ''}</span>
-      <span>${message}</span>
+      <span>${escapeHtml(message)}</span>
     </div>
     <button type="button" style="color:var(--text-muted);font-weight:bold;cursor:pointer;">&times;</button>
   `;
@@ -320,9 +320,9 @@ function renderCartItems() {
     total += itemTotal;
     return `
       <div class="cart-item">
-        <img src="${item.image}" alt="${item.name}" class="cart-item-img" onerror="this.src='https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=100'"/>
+        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" class="cart-item-img" onerror="this.src='https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=100'"/>
         <div class="cart-item-info">
-          <div class="cart-item-title">${item.name}</div>
+          <div class="cart-item-title">${escapeHtml(item.name)}</div>
           <div class="cart-item-price">${formatCurrency(item.price)}</div>
           <div class="cart-qty-controls">
             <button class="qty-btn" onclick="updateItemQuantity('${item.id}', -1)">-</button>
@@ -395,7 +395,7 @@ async function renderFeaturedMenu() {
 
     container.innerHTML = featured.map(item => createProductCardHtml(item)).join('');
   } catch (err) {
-    container.innerHTML = `<p class="text-center" style="grid-column: 1/-1; color: #D32F2F;">${err.message}</p>`;
+    container.innerHTML = `<p class="text-center" style="grid-column: 1/-1; color: #D32F2F;">${escapeHtml(err.message)}</p>`;
   }
 }
 
@@ -563,7 +563,7 @@ function initMenuPage() {
       grid.innerHTML = items.map(item => createProductCardHtml(item)).join('');
     } catch (err) {
       if (resultCountEl) resultCountEl.textContent = 'Lỗi kết nối máy chủ';
-      grid.innerHTML = `<p class="text-center" style="grid-column:1/-1; color:#D32F2F;">${err.message}</p>`;
+      grid.innerHTML = `<p class="text-center" style="grid-column:1/-1; color:#D32F2F;">${escapeHtml(err.message)}</p>`;
     }
   }
 
@@ -616,14 +616,14 @@ function createProductCardHtml(item) {
   return `
     <article class="product-card" data-id="${item.id}">
       <div class="product-img-wrapper">
-        <img src="${item.image}" alt="${item.name}" class="product-img" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=500'"/>
+        <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" class="product-img" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=500'"/>
         <span class="product-badge ${badgeClass}">${badgeText}</span>
-        <span class="product-category-tag">${item.category}</span>
+        <span class="product-category-tag">${escapeHtml(item.category)}</span>
       </div>
       <div class="product-body">
         <div class="product-code">Mã: ${item.id}</div>
-        <h4 class="product-name">${item.name}</h4>
-        <p class="product-desc" title="${item.description}">${item.description}</p>
+        <h4 class="product-name">${escapeHtml(item.name)}</h4>
+        <p class="product-desc" title="${escapeHtml(item.description)}">${escapeHtml(item.description)}</p>
         <div class="product-footer">
           <div class="product-price">${formatCurrency(item.price)}</div>
           <button type="button" class="btn btn-primary btn-sm" 
@@ -1029,13 +1029,13 @@ function initAdminPage() {
             <td><strong>#${stt}</strong></td>
             <td><span style="font-family: monospace; font-weight: 700; color: var(--primary); background: var(--bg-surface-alt); padding: 3px 8px; border-radius: 4px;">${item.id}</span></td>
             <td>
-              <img src="${item.image}" alt="${item.name}" class="table-img" onerror="this.src='https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=100'"/>
+              <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" class="table-img" onerror="this.src='https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=100'"/>
             </td>
             <td>
-              <div style="font-weight: 700;">${item.name}</div>
-              <div style="font-size: 0.8rem; color: var(--text-muted); max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.description || 'Chưa có mô tả'}</div>
+              <div style="font-weight: 700;">${escapeHtml(item.name)}</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHtml(item.description || 'Chưa có mô tả')}</div>
             </td>
-            <td><span class="pill-btn" style="padding: 3px 10px; font-size: 0.8rem;">${item.category}</span></td>
+            <td><span class="pill-btn" style="padding: 3px 10px; font-size: 0.8rem;">${escapeHtml(item.category)}</span></td>
             <td style="font-weight: 700; color: var(--primary);">${formatCurrency(item.price)}</td>
             <td><span class="product-badge ${badgeClass}" style="position:static; display:inline-block;">${badgeText}</span></td>
             <td>
@@ -1055,7 +1055,7 @@ function initAdminPage() {
         Math.min(startIndex + pageItems.length, pagination.totalItems)
       );
     } catch (err) {
-      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#D32F2F; padding:24px;">${err.message}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#D32F2F; padding:24px;">${escapeHtml(err.message)}</td></tr>`;
     }
   }
 
@@ -1130,9 +1130,9 @@ function initAdminPage() {
 
       tbody.innerHTML = orders.map(o => `
         <tr>
-          <td><a href="javascript:void(0)" onclick="viewOrderDetails(${o.Id})" style="font-weight:700; color:var(--primary); text-decoration:underline;" title="Xem chi tiết món">${o.OrderCode}</a></td>
-          <td>${o.CustomerName}</td>
-          <td>${o.CustomerPhone}</td>
+          <td><a href="javascript:void(0)" onclick="viewOrderDetails(${o.Id})" style="font-weight:700; color:var(--primary); text-decoration:underline;" title="Xem chi tiết món">${escapeHtml(o.OrderCode)}</a></td>
+          <td>${escapeHtml(o.CustomerName)}</td>
+          <td>${escapeHtml(o.CustomerPhone)}</td>
           <td>${o.ItemCount}</td>
           <td style="font-weight:700; color:var(--primary);">${formatCurrency(o.TotalAmount)}</td>
           <td><span class="product-badge ${statusBadge[o.Status] || ''}" style="position:static; display:inline-block;">${o.Status}</span></td>
@@ -1147,7 +1147,7 @@ function initAdminPage() {
         </tr>
       `).join('');
     } catch (err) {
-      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#D32F2F;">${err.message}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:#D32F2F;">${escapeHtml(err.message)}</td></tr>`;
     }
   }
 
@@ -1193,7 +1193,7 @@ function initAdminPage() {
         ? `<tr><td colspan="3" style="text-align:center;">Chưa có dữ liệu bán hàng</td></tr>`
         : topItems.map(p => `
           <tr>
-            <td><strong>${p.ProductName}</strong><br/><span style="font-size:0.78rem; color:var(--text-muted);">${p.ProductCode} • ${p.CategoryName}</span></td>
+            <td><strong>${escapeHtml(p.ProductName)}</strong><br/><span style="font-size:0.78rem; color:var(--text-muted);">${escapeHtml(p.ProductCode)} • ${escapeHtml(p.CategoryName)}</span></td>
             <td><strong>${p.TotalQuantitySold}</strong> ly</td>
             <td style="font-weight:700; color:var(--primary);">${formatCurrency(p.TotalRevenue)}</td>
           </tr>
@@ -1226,7 +1226,7 @@ function initAdminPage() {
         </div>
       `;
     } catch (err) {
-      chartEl.innerHTML = `<p style="color:#D32F2F;">${err.message}</p>`;
+      chartEl.innerHTML = `<p style="color:#D32F2F;">${escapeHtml(err.message)}</p>`;
     }
   }
 
@@ -1249,12 +1249,12 @@ function initAdminPage() {
         const isSelf = u.id === user.id;
         return `
           <tr>
-            <td><strong>${u.username}</strong></td>
+            <td><strong>${escapeHtml(u.username)}</strong></td>
             <td>
-              <div style="font-weight:600;">${u.fullName}</div>
-              <div style="font-size:0.8rem; color:var(--text-muted);">${u.email}</div>
+              <div style="font-weight:600;">${escapeHtml(u.fullName)}</div>
+              <div style="font-size:0.8rem; color:var(--text-muted);">${escapeHtml(u.email)}</div>
             </td>
-            <td>${u.phone || '—'}</td>
+            <td>${escapeHtml(u.phone || '—')}</td>
             <td>
               <select class="form-select" style="padding:4px 8px; font-size:0.85rem;" ${isSelf ? 'disabled' : ''} onchange="handleChangeUserRole(${u.id}, this.value)">
                 <option value="customer" ${u.role === 'customer' ? 'selected' : ''}>customer</option>
@@ -1276,7 +1276,7 @@ function initAdminPage() {
         `;
       }).join('');
     } catch (err) {
-      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#D32F2F;">${err.message}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#D32F2F;">${escapeHtml(err.message)}</td></tr>`;
     }
   }
 

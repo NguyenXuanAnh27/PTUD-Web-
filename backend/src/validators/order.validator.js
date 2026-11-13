@@ -24,8 +24,8 @@ const createOrderValidator = [
     .withMessage('Ghi chú tối đa 500 ký tự'),
 
   body('items')
-    .isArray({ min: 1 })
-    .withMessage('Đơn hàng phải có ít nhất 1 món'),
+    .isArray({ min: 1, max: 50 })
+    .withMessage('Đơn hàng phải có từ 1 đến 50 dòng món'),
 
   body('items.*.productId')
     .isInt({ min: 1 })

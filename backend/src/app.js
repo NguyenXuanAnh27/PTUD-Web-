@@ -6,6 +6,7 @@ const env = require('./config/env');
 const routes = require('./routes');
 const notFound = require('./middlewares/notFound');
 const errorHandler = require('./middlewares/errorHandler');
+const ApiError = require('./utils/ApiError');
 
 const app = express();
 
@@ -16,11 +17,13 @@ app.use(helmet());
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Cho phép request không có origin (Postman, curl, mở file:// trực tiếp) hoặc nằm trong danh sách cho phép
-      if (!origin || origin === 'null' || env.corsOrigin.includes('*') || env.corsOrigin.includes(origin)) {
+      // Cho phép request không có origin (Postman, curl) hoặc nằm trong danh sách cho phép.
+      // Origin "null" (mở file:// trực tiếp) chỉ được phép ngoài môi trường production.
+      const allowNullOrigin = origin === 'null' && env.nodeEnv !== 'production';
+      if (!origin || allowNullOrigin || env.corsOrigin.includes('*') || env.corsOrigin.includes(origin)) {
         return callback(null, true);
       }
-      return callback(new Error(`Origin ${origin} không được phép bởi CORS`));
+      return callback(new ApiError(403, `Origin ${origin} không được phép bởi CORS`));
     },
     credentials: true
   })

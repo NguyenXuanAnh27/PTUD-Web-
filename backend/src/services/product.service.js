@@ -40,27 +40,36 @@ const createProduct = async ({ code, name, categoryId, price, status, image, des
     ]);
   }
 
-  let productCode = code ? code.trim().toUpperCase() : '';
-  if (!productCode) {
-    productCode = await productRepository.generateNextCode(category.Code || 'TU');
-  } else {
-    const duplicate = await productRepository.findByCode(productCode);
-    if (duplicate) {
-      throw new ApiError(409, `Mã sản phẩm "${productCode}" đã tồn tại`, [
-        { field: 'code', message: 'Mã sản phẩm đã tồn tại' }
-      ]);
-    }
-  }
-
-  return productRepository.create({
-    code: productCode,
+  const productData = {
     name: name.trim(),
     categoryId,
     price,
     status: status || 'available',
     image: image ? image.trim() : null,
     description: description ? description.trim() : null
-  });
+  };
+
+  const manualCode = code ? code.trim().toUpperCase() : '';
+  if (manualCode) {
+    const duplicate = await productRepository.findByCode(manualCode);
+    if (duplicate) {
+      throw new ApiError(409, `Mã sản phẩm "${manualCode}" đã tồn tại`, [
+        { field: 'code', message: 'Mã sản phẩm đã tồn tại' }
+      ]);
+    }
+    return productRepository.create({ ...productData, code: manualCode });
+  }
+
+  // Mã tự sinh có thể trùng nếu 2 admin tạo món cùng lúc => sinh lại và thử lại
+  for (let attempt = 1; ; attempt += 1) {
+    const autoCode = await productRepository.generateNextCode(category.Code || 'TU');
+    try {
+      return await productRepository.create({ ...productData, code: autoCode });
+    } catch (err) {
+      const isDuplicate = err.number === 2627 || err.number === 2601;
+      if (!isDuplicate || attempt >= 3) throw err;
+    }
+  }
 };
 
 const updateProduct = async (id, { name, categoryId, price, status, image, description }) => {
@@ -81,8 +90,9 @@ const updateProduct = async (id, { name, categoryId, price, status, image, descr
     categoryId,
     price,
     status: status || existing.Status,
-    image: image !== undefined ? image : existing.Image,
-    description: description !== undefined ? description : existing.Description
+    // Chuỗi rỗng => xóa (NULL), giống hành vi của createProduct; có giá trị thì trim
+    image: image !== undefined ? (image ? image.trim() : null) : existing.Image,
+    description: description !== undefined ? (description ? description.trim() : null) : existing.Description
   });
 };
 

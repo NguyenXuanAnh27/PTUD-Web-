@@ -20,7 +20,19 @@ const loginLimiter = rateLimit({
   }
 });
 
-router.post('/register', registerValidator, validate, authController.register);
+// Giới hạn số lần đăng ký từ một IP để chống tạo tài khoản rác hàng loạt
+const registerLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 giờ
+  max: env.nodeEnv === 'test' ? 1000 : 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: 'Bạn đã đăng ký quá nhiều lần, vui lòng thử lại sau'
+  }
+});
+
+router.post('/register', registerLimiter, registerValidator, validate, authController.register);
 router.post('/login', loginLimiter, loginValidator, validate, authController.login);
 router.post('/logout', authenticate, authController.logout);
 

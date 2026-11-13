@@ -7,6 +7,19 @@
 
 const API_BASE_URL = 'http://localhost:5000/api';
 
+/**
+ * Mã hóa ký tự đặc biệt HTML để chèn dữ liệu người dùng vào innerHTML an toàn (chống XSS).
+ * Mọi dữ liệu từ server/người dùng (tên, ghi chú, tên món...) phải đi qua hàm này.
+ */
+function escapeHtml(value) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 const AUTH_STORAGE = {
   TOKEN: 'tulo_auth_token',
   USER: 'tulo_auth_user'
@@ -439,7 +452,7 @@ function renderNavbarAuth() {
     const roleTag = user.role === 'admin' ? 'Admin' : 'Khách';
     wrapper.innerHTML = `
       <button type="button" id="myOrdersBtn" class="btn btn-secondary btn-sm" title="Xem đơn hàng của bạn">
-        👤 ${user.fullName.split(' ').slice(-1)[0]} (${roleTag})
+        👤 ${escapeHtml(user.fullName.split(' ').slice(-1)[0])} (${roleTag})
       </button>
       <button type="button" id="logoutBtn" class="btn btn-outline btn-sm" title="Đăng xuất">
         Thoát
@@ -526,7 +539,7 @@ async function loadMyOrdersTab() {
       return `
         <div style="border:1px solid var(--border-color); border-radius:10px; padding:14px; margin-bottom:12px;">
           <div class="flex-between" style="margin-bottom:8px;">
-            <strong>${o.OrderCode}</strong>
+            <strong>${escapeHtml(o.OrderCode)}</strong>
             <span class="product-badge ${st.cls}" style="position:static;">${st.text}</span>
           </div>
           <div style="font-size:0.86rem; color:var(--text-muted); margin-bottom:8px;">
@@ -543,7 +556,7 @@ async function loadMyOrdersTab() {
       `;
     }).join('');
   } catch (err) {
-    content.innerHTML = `<p style="color:#D32F2F;">${err.message}</p>`;
+    content.innerHTML = `<p style="color:#D32F2F;">${escapeHtml(err.message)}</p>`;
   }
 }
 
@@ -595,9 +608,9 @@ window.viewOrderDetails = async function (orderId) {
     titleEl.textContent = `Đơn Hàng ${o.OrderCode}`;
     bodyEl.innerHTML = `
       <div style="font-size:0.9rem; margin-bottom:14px; line-height:1.6;">
-        <div><strong>Khách hàng:</strong> ${o.CustomerName} (${o.CustomerPhone})</div>
+        <div><strong>Khách hàng:</strong> ${escapeHtml(o.CustomerName)} (${escapeHtml(o.CustomerPhone)})</div>
         <div><strong>Trạng thái:</strong> ${o.Status}</div>
-        <div><strong>Ghi chú:</strong> ${o.Note || 'Không có'}</div>
+        <div><strong>Ghi chú:</strong> ${escapeHtml(o.Note || 'Không có')}</div>
       </div>
       <table class="data-table" style="font-size:0.88rem;">
         <thead>
@@ -606,7 +619,7 @@ window.viewOrderDetails = async function (orderId) {
         <tbody>
           ${(o.items || []).map(item => `
             <tr>
-              <td>${item.ProductName}</td>
+              <td>${escapeHtml(item.ProductName)}</td>
               <td>${item.Quantity}</td>
               <td>${formatCurrency(item.UnitPrice)}</td>
               <td><strong>${formatCurrency(item.Subtotal)}</strong></td>
@@ -619,7 +632,7 @@ window.viewOrderDetails = async function (orderId) {
       </div>
     `;
   } catch (err) {
-    bodyEl.innerHTML = `<p style="color:#D32F2F;">${err.message}</p>`;
+    bodyEl.innerHTML = `<p style="color:#D32F2F;">${escapeHtml(err.message)}</p>`;
   }
 };
 

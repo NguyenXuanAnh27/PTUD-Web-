@@ -4,8 +4,20 @@ const path = require('path');
 // Tải biến môi trường từ file .env ở thư mục backend
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
+const nodeEnv = process.env.NODE_ENV || 'development';
+const DEV_FALLBACK_JWT_SECRET = 'dev_fallback_secret_please_change_in_env';
+
+// Môi trường production bắt buộc phải có JWT_SECRET riêng (đủ dài),
+// tránh việc chạy bằng secret mặc định công khai khiến ai cũng giả mạo được token.
+if (nodeEnv === 'production') {
+  const secret = process.env.JWT_SECRET;
+  if (!secret || secret === DEV_FALLBACK_JWT_SECRET || secret.length < 32) {
+    throw new Error('Thiếu hoặc JWT_SECRET quá yếu (cần >= 32 ký tự) khi chạy NODE_ENV=production');
+  }
+}
+
 const env = {
-  nodeEnv: process.env.NODE_ENV || 'development',
+  nodeEnv,
   port: parseInt(process.env.PORT, 10) || 5000,
   corsOrigin: process.env.CORS_ORIGIN
     ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim())
@@ -24,7 +36,7 @@ const env = {
   },
 
   jwt: {
-    secret: process.env.JWT_SECRET || 'dev_fallback_secret_please_change_in_env',
+    secret: process.env.JWT_SECRET || DEV_FALLBACK_JWT_SECRET,
     expiresIn: process.env.JWT_EXPIRES_IN || '24h'
   }
 };

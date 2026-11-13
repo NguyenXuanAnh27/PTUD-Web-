@@ -45,6 +45,11 @@ const createOrderWithDetails = async ({ userId, orderCode, customerName, custome
       });
     }
 
+    // Cột TotalAmount là INT (tối đa ~2,1 tỷ): chặn sớm để trả 400 thay vì lỗi tràn số (500)
+    if (totalAmount > 2147483647) {
+      throw new ApiError(400, 'Tổng giá trị đơn hàng vượt quá giới hạn cho phép, vui lòng tách thành nhiều đơn');
+    }
+
     // Bước 2: Thêm bản ghi vào bảng Orders
     const orderReq = new sql.Request(transaction);
     const orderResult = await orderReq

@@ -57,13 +57,15 @@ const login = async ({ usernameOrEmail, password }) => {
     throw new ApiError(401, 'Tên đăng nhập hoặc mật khẩu không chính xác');
   }
 
-  if (!user.IsActive) {
-    throw new ApiError(403, 'Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên');
-  }
-
+  // Kiểm tra mật khẩu TRƯỚC khi báo khóa tài khoản, để người ngoài không dò được
+  // tài khoản nào đang bị khóa chỉ bằng cách biết username.
   const isMatch = await bcrypt.compare(password, user.PasswordHash);
   if (!isMatch) {
     throw new ApiError(401, 'Tên đăng nhập hoặc mật khẩu không chính xác');
+  }
+
+  if (!user.IsActive) {
+    throw new ApiError(403, 'Tài khoản đã bị khóa. Vui lòng liên hệ quản trị viên');
   }
 
   const token = jwt.sign(

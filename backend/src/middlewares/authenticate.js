@@ -28,7 +28,8 @@ const authenticate = async (req, res, next) => {
       return next(new ApiError(401, 'Phiên đăng nhập đã kết thúc, vui lòng đăng nhập lại'));
     }
 
-    const decoded = jwt.verify(token, env.jwt.secret);
+    // Ghim thuật toán để chặn các token ký bằng thuật toán khác (vd: "none")
+    const decoded = jwt.verify(token, env.jwt.secret, { algorithms: ['HS256'] });
 
     const user = await userRepository.findById(decoded.id);
     if (!user) {

@@ -131,6 +131,7 @@ BEGIN
         TotalAmount   INT           NOT NULL CONSTRAINT DF_Orders_TotalAmount DEFAULT 0,
         Status        NVARCHAR(20)  NOT NULL CONSTRAINT DF_Orders_Status DEFAULT N'pending',
         Note          NVARCHAR(500) NULL,
+        CancelReason  NVARCHAR(255) NULL,
         CustomerName  NVARCHAR(100) NOT NULL,
         CustomerPhone NVARCHAR(20)  NOT NULL,
         CreatedAt     DATETIME2     NOT NULL CONSTRAINT DF_Orders_CreatedAt DEFAULT GETDATE(),
@@ -139,7 +140,9 @@ BEGIN
         CONSTRAINT FK_Orders_Users FOREIGN KEY (UserId)
             REFERENCES dbo.Users(Id) ON DELETE NO ACTION,
         CONSTRAINT CK_Orders_TotalAmount CHECK (TotalAmount >= 0),
-        CONSTRAINT CK_Orders_Status CHECK (Status IN (N'pending', N'confirmed', N'completed', N'cancelled'))
+        -- pending=Chờ duyệt, confirmed=Đã duyệt, preparing=Đang pha chế, ready=Sẵn sàng,
+        -- completed=Hoàn thành, cancelled=Đã hủy/bị từ chối
+        CONSTRAINT CK_Orders_Status CHECK (Status IN (N'pending', N'confirmed', N'preparing', N'ready', N'completed', N'cancelled'))
     );
 END
 GO
@@ -182,4 +185,35 @@ GO
 
 IF NOT EXISTS (SELECT name FROM sys.indexes WHERE name = N'IX_OrderDetails_ProductId' AND object_id = OBJECT_ID(N'dbo.OrderDetails'))
     CREATE INDEX IX_OrderDetails_ProductId ON dbo.OrderDetails(ProductId);
+GO
+
+-- ============================================================================
+-- 7. BẢNG ORDER STATUS HISTORY (Lịch sử trạng thái đơn - làm timeline theo dõi đơn)
+-- Với database đã có sẵn, chạy thêm: database/migrations/002_order_workflow.sql
+-- ============================================================================
+IF OBJECT_ID(N'dbo.OrderStatusHistory', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.OrderStatusHistory (
+        Id              INT IDENTITY(1,1) PRIMARY KEY,
+        OrderId         INT           NOT NULL,
+        Status          NVARCHAR(20)  NOT NULL,
+        Note            NVARCHAR(255) NULL,
+        ChangedByRole   NVARCHAR(20)  NOT NULL,
+        ChangedByUserId INT           NULL,
+        CreatedAt       DATETIME2     NOT NULL CONSTRAINT DF_OrderStatusHistory_CreatedAt DEFAULT GETDATE(),
+
+        CONSTRAINT FK_OrderStatusHistory_Orders FOREIGN KEY (OrderId)
+            REFERENCES dbo.Orders(Id) ON DELETE CASCADE,
+        CONSTRAINT FK_OrderStatusHistory_Users FOREIGN KEY (ChangedByUserId)
+            REFERENCES dbo.Users(Id) ON DELETE SET NULL,
+        CONSTRAINT CK_OrderStatusHistory_Status
+            CHECK (Status IN (N'pending', N'confirmed', N'preparing', N'ready', N'completed', N'cancelled')),
+        CONSTRAINT CK_OrderStatusHistory_Role
+            CHECK (ChangedByRole IN (N'customer', N'admin', N'system'))
+    );
+END
+GO
+
+IF NOT EXISTS (SELECT name FROM sys.indexes WHERE name = N'IX_OrderStatusHistory_OrderId' AND object_id = OBJECT_ID(N'dbo.OrderStatusHistory'))
+    CREATE INDEX IX_OrderStatusHistory_OrderId ON dbo.OrderStatusHistory(OrderId, CreatedAt);
 GO

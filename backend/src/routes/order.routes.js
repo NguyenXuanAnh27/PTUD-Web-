@@ -6,7 +6,8 @@ const validate = require('../middlewares/validate');
 const {
   orderIdValidator,
   createOrderValidator,
-  updateOrderStatusValidator
+  updateOrderStatusValidator,
+  cancelOrderValidator
 } = require('../validators/order.validator');
 
 const router = express.Router();
@@ -16,12 +17,13 @@ router.use(authenticate);
 
 // Đặt trước /:id để tránh xung đột route
 router.get('/my-orders', orderController.listMyOrders);
+router.get('/summary', authorize('admin'), orderController.getOrderSummary);
 
 router.post('/', createOrderValidator, validate, orderController.createOrder);
 router.get('/', authorize('admin'), orderController.listAllOrders);
 router.get('/:id', orderIdValidator, validate, orderController.getOrderById);
 router.patch('/:id/status', authorize('admin'), updateOrderStatusValidator, validate, orderController.updateOrderStatus);
-router.patch('/:id/cancel', orderIdValidator, validate, orderController.cancelMyOrder);
+router.patch('/:id/cancel', orderIdValidator, cancelOrderValidator, validate, orderController.cancelMyOrder);
 
 module.exports = router;
 

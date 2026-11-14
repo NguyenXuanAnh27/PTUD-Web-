@@ -70,11 +70,15 @@
 | Method | Endpoint | Quyền | Body / Query | Mã trả về |
 |--------|----------|-------|--------------|-----------|
 | POST | `/api/orders` | Auth | `{ "customerName", "customerPhone", "note", "items": [{ "productId", "quantity" }] }` | 201, 400, 401, 404 |
-| GET | `/api/orders` | Admin | `?status=&from=&to=&keyword=&page=1&limit=10` | 200, 401, 403 |
-| GET | `/api/orders/my-orders` | Auth | `?status=&page=1&limit=10` | 200, 401 |
-| GET | `/api/orders/:id` | Auth (Admin hoặc Chủ đơn) | – | 200, 401, 403, 404 |
-| PATCH | `/api/orders/:id/status` | Admin | `{ "status": "confirmed" \| "completed" \| "cancelled" }` | 200, 400, 401, 403, 404 |
-| PATCH | `/api/orders/:id/cancel` | Auth (Chủ đơn / Admin) | – (chỉ hủy khi `pending`) | 200, 400, 401, 403, 404 |
+| GET | `/api/orders` | Admin | `?status=&from=&to=&keyword=&page=1&limit=10` (`status=active` = mọi đơn chưa xong/chưa hủy) | 200, 400, 401, 403 |
+| GET | `/api/orders/summary` | Admin | – (trả `counts` theo trạng thái, `active`, `latestPendingOrderId` để báo đơn mới) | 200, 401, 403 |
+| GET | `/api/orders/my-orders` | Auth | `?status=&page=1&limit=10` (`status=active` = đơn đang xử lý) | 200, 401 |
+| GET | `/api/orders/:id` | Auth (Admin hoặc Chủ đơn) | – (kèm `history`: lịch sử đổi trạng thái để vẽ timeline) | 200, 401, 403, 404 |
+| PATCH | `/api/orders/:id/status` | Admin | `{ "status": "confirmed" \| "preparing" \| "ready" \| "completed" \| "cancelled", "reason": "bắt buộc khi cancelled" }` | 200, 400, 401, 403, 404, 409 |
+| PATCH | `/api/orders/:id/cancel` | Auth (Chủ đơn / Admin) | `{ "reason": "tùy chọn" }` (chỉ hủy khi `pending`) | 200, 400, 401, 403, 404 |
+
+**Quy trình trạng thái đơn:** `pending` (Chờ duyệt) → `confirmed` (Đã duyệt) → `preparing` (Đang pha chế) → `ready` (Sẵn sàng) → `completed` (Hoàn thành).
+Từ mọi bước chưa hoàn thành có thể `cancelled` (từ chối/hủy) nhưng **bắt buộc có lý do**. Chỉ được đi đúng bước kế tiếp, không nhảy cóc/lùi bước; `completed` và `cancelled` là trạng thái cuối. Lỗi `409` khi đơn vừa bị người khác đổi trạng thái. Cần chạy `database/migrations/002_order_workflow.sql` trên database đang dùng.
 
 ## 7. Statistics (`/api/statistics`)
 | Method | Endpoint | Quyền | Query | Mã trả về |

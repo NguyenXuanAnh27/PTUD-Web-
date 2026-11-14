@@ -35,7 +35,9 @@ const getMonthlyRevenue = async (year) => {
         SUM(TotalAmount) AS Revenue
       FROM dbo.Orders
       WHERE YEAR(CreatedAt) = @year
-        AND Status IN (N'completed', N'confirmed')
+        -- Doanh thu chỉ tính đơn đã hoàn thành (khớp với "Tổng doanh thu hoàn thành" ở phần tổng quan).
+        -- Đơn đã duyệt/đang pha chế/sẵn sàng chưa được tính vì chưa giao xong.
+        AND Status = N'completed'
       GROUP BY MONTH(CreatedAt)
       ORDER BY Month ASC
     `);

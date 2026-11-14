@@ -1,0 +1,151 @@
+/* ==========================================================================
+   TULO COFFEE - THEO DÕI ĐƠN (khách) & BẢNG DUYỆT ĐƠN (chủ quán)
+   Dùng biến màu của style.css nên tự đổi theo chế độ sáng/tối.
+   ========================================================================== */
+
+/* ---------- Chip trạng thái ---------- */
+.ord-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  white-space: nowrap;
+  background: var(--bg-surface-alt);
+  color: var(--text-muted);
+}
+.ord-chip.st-pending { background: #FFF1D6; color: #8A5A00; }
+.ord-chip.st-confirmed { background: #DDEBFF; color: #1B4F9C; }
+.ord-chip.st-preparing { background: #F6E3D3; color: #8A4A1E; }
+.ord-chip.st-ready { background: #DDF3E2; color: #1E7A3A; }
+.ord-chip.st-completed { background: #E4E4E4; color: #444; }
+.ord-chip.st-cancelled { background: #FBDDDD; color: #B3261E; }
+
+/* ---------- Thẻ đơn (dùng cho cả khách & admin) ---------- */
+.ord-card {
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 12px;
+  background: var(--bg-surface);
+}
+.ord-card.is-new { animation: ordPulse 1.6s ease-out 2; border-color: var(--primary); }
+@keyframes ordPulse {
+  0% { box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.45); }
+  100% { box-shadow: 0 0 0 14px rgba(var(--primary-rgb), 0); }
+}
+.ord-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ord-code { font-weight: 800; }
+.ord-meta { font-size: 0.84rem; color: var(--text-muted); margin-top: 4px; }
+.ord-items { margin: 8px 0; font-size: 0.92rem; line-height: 1.5; }
+.ord-note { font-size: 0.84rem; background: var(--bg-surface-alt); border-radius: 8px; padding: 6px 10px; margin: 6px 0; }
+.ord-reason { font-size: 0.84rem; color: #B3261E; margin-top: 4px; }
+.ord-total { font-weight: 800; color: var(--primary); }
+.ord-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.ord-actions .btn { flex: 1 1 auto; min-height: 40px; }
+.ord-empty { text-align: center; color: var(--text-muted); padding: 28px 12px; }
+
+/* ---------- Thanh tiến trình nhỏ trong danh sách ---------- */
+.ord-mini { display: flex; gap: 4px; margin: 10px 0 4px; }
+.ord-mini i { flex: 1; height: 5px; border-radius: 3px; background: var(--border-color); }
+.ord-mini i.on { background: var(--primary); }
+.ord-mini.is-cancelled i.on { background: #B3261E; }
+
+/* ---------- Màn hình theo dõi (bottom sheet trên điện thoại, hộp giữa màn hình trên PC) ---------- */
+.trk-overlay {
+  position: fixed; inset: 0; z-index: 1300;
+  background: rgba(0, 0, 0, 0.5);
+  display: none; align-items: center; justify-content: center;
+}
+.trk-overlay.active { display: flex; }
+.trk-sheet {
+  background: var(--bg-surface);
+  width: min(560px, 100%);
+  max-height: 92vh;
+  overflow-y: auto;
+  border-radius: 18px;
+  padding: 18px 18px 22px;
+}
+.trk-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.trk-head h3 { font-family: var(--font-heading); font-size: 1.15rem; }
+.trk-close { background: none; border: 0; font-size: 1.8rem; line-height: 1; cursor: pointer; color: var(--text-muted); min-width: 40px; min-height: 40px; }
+.trk-hero { text-align: center; padding: 14px 8px 8px; }
+.trk-hero .emoji { font-size: 2.6rem; line-height: 1.1; }
+.trk-hero .label { font-size: 1.2rem; font-weight: 800; margin-top: 4px; }
+.trk-hero .hint { font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; }
+.trk-live { font-size: 0.74rem; color: var(--text-muted); text-align: center; margin-bottom: 6px; }
+
+.trk-steps { list-style: none; margin: 14px 0; padding: 0; }
+.trk-step { position: relative; display: flex; gap: 12px; padding-bottom: 16px; }
+.trk-step:last-child { padding-bottom: 0; }
+.trk-step::before {
+  content: ''; position: absolute; left: 13px; top: 28px; bottom: 0; width: 2px; background: var(--border-color);
+}
+.trk-step:last-child::before { display: none; }
+.trk-step.done::before { background: var(--primary); }
+.trk-dot {
+  flex: 0 0 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 800;
+  background: var(--bg-surface-alt); color: var(--text-muted); border: 2px solid var(--border-color);
+}
+.trk-step.done .trk-dot { background: var(--primary); color: var(--bg-surface); border-color: var(--primary); }
+.trk-step.current .trk-dot { box-shadow: 0 0 0 5px rgba(var(--primary-rgb), 0.18); }
+.trk-step.bad .trk-dot { background: #B3261E; border-color: #B3261E; color: #fff; }
+.trk-step .t { font-weight: 700; font-size: 0.95rem; }
+.trk-step.todo .t { color: var(--text-muted); font-weight: 600; }
+.trk-step .s { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+.trk-items { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 6px; }
+.trk-items td { padding: 6px 0; border-bottom: 1px dashed var(--border-color); }
+.trk-items td:last-child { text-align: right; font-weight: 700; white-space: nowrap; }
+.trk-sum { display: flex; justify-content: space-between; margin-top: 12px; font-size: 1.05rem; font-weight: 800; color: var(--primary); }
+.trk-sec { font-weight: 800; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin: 16px 0 4px; }
+
+@media (max-width: 768px) {
+  .trk-overlay { align-items: flex-end; }
+  .trk-sheet { border-bottom-left-radius: 0; border-bottom-right-radius: 0; max-height: 90vh; }
+}
+
+/* ---------- Huy hiệu số đơn đang xử lý trên thanh dưới đáy ---------- */
+.order-badge {
+  position: absolute; top: 2px; right: calc(50% - 22px);
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 9px; background: #D32F2F; color: #fff;
+  font-size: 0.68rem; font-weight: 800; line-height: 18px; text-align: center;
+}
+
+/* ---------- Bảng duyệt đơn của chủ quán ---------- */
+.order-board { padding: 4px 0; }
+.ob-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; justify-content: space-between; margin-bottom: 12px; }
+.ob-tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; flex: 1 1 100%; }
+.ob-tab {
+  flex: 0 0 auto; border: 1px solid var(--border-color); background: var(--bg-surface);
+  color: var(--text-main, inherit); border-radius: 999px; padding: 8px 14px;
+  font-weight: 700; font-size: 0.86rem; cursor: pointer; font-family: inherit;
+}
+.ob-tab.active { background: var(--primary); color: var(--bg-surface); border-color: var(--primary); }
+.ob-tab .n {
+  display: inline-block; min-width: 20px; margin-left: 6px; padding: 0 6px; border-radius: 10px;
+  background: rgba(128, 128, 128, 0.22); font-size: 0.75rem; text-align: center;
+}
+.ob-tab.has-new .n { background: #D32F2F; color: #fff; }
+.ob-tools { display: flex; gap: 8px; align-items: center; font-size: 0.84rem; color: var(--text-muted); }
+.ob-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.ob-grid .ord-card { margin-bottom: 0; }
+
+.ob-modal-overlay {
+  position: fixed; inset: 0; z-index: 1400; background: rgba(0, 0, 0, 0.5);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.ob-modal { background: var(--bg-surface); border-radius: 16px; padding: 18px; width: min(440px, 100%); }
+.ob-modal h4 { font-family: var(--font-heading); margin-bottom: 4px; }
+.ob-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+.ob-chips button {
+  border: 1px solid var(--border-color); background: var(--bg-surface-alt); color: inherit;
+  border-radius: 999px; padding: 6px 12px; font-size: 0.82rem; cursor: pointer; font-family: inherit;
+}
+.ob-modal textarea { width: 100%; min-height: 70px; border: 1px solid var(--border-color); border-radius: 10px; padding: 10px; font-family: inherit; background: var(--bg-surface); color: inherit; }
+.ob-modal .ord-actions { justify-content: flex-end; }

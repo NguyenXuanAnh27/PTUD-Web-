@@ -53,7 +53,7 @@ erDiagram
         INT UserId FK "Tham chiếu Users.Id"
         NVARCHAR OrderCode UK "Mã đơn hàng (ORD-...)"
         INT TotalAmount "Tổng tiền (VNĐ)"
-        NVARCHAR Status "pending / confirmed / completed / cancelled"
+        NVARCHAR Status "pending / confirmed / preparing / ready / completed / cancelled"
         NVARCHAR Note "Ghi chú của khách"
         NVARCHAR CustomerName "Tên người nhận"
         NVARCHAR CustomerPhone "SĐT người nhận"

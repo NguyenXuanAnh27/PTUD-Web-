@@ -224,6 +224,10 @@ function initCartDrawer() {
         renderCartItems();
         closeCart();
         showToast(`Đặt món thành công! Mã đơn: ${res.data.OrderCode}`, 'success');
+        // Mở ngay màn hình theo dõi đơn để khách thấy quán nhận/duyệt đơn từng bước
+        if (typeof window.openOrderTracking === 'function') {
+          (window.TuloOrderStatus && window.TuloOrderStatus.refreshBadge && window.TuloOrderStatus.refreshBadge(), window.openOrderTracking(res.data.Id));
+        }
       } catch (err) {
         showToast(err.message, 'error');
       } finally {
@@ -688,6 +692,12 @@ function initAdminPage() {
     refreshAll();
   };
 
+  // Khi admin duyệt/đổi trạng thái đơn ở bảng duyệt đơn: cập nhật lại thống kê & số liệu tổng quan
+  document.addEventListener('tulo:orders-changed', () => {
+    renderAdminStatisticsSection();
+    updateDashboardStats();
+  });
+
   refreshAll();
 
   function injectAdminExtras() {
@@ -716,19 +726,10 @@ function initAdminPage() {
           <h3 style="font-family: var(--font-heading); font-size: 1.25rem;">Quản Lý Đơn Hàng & Doanh Thu (SQL Server)</h3>
           <span id="adminRevenueBadge" style="font-weight: 700; color: var(--primary);"></span>
         </div>
-        <div class="table-responsive">
+        <!-- Bảng duyệt đơn kiểu chủ quán: do js/admin-orders.js vẽ -->
+        <div id="adminOrderBoard" class="order-board"></div>
+        <div class="table-responsive" style="display:none;">
           <table class="data-table">
-            <thead>
-              <tr>
-                <th>Mã Đơn</th>
-                <th>Khách Hàng</th>
-                <th>SĐT</th>
-                <th>Số Món</th>
-                <th>Tổng Tiền</th>
-                <th>Trạng Thái</th>
-                <th>Cập Nhật</th>
-              </tr>
-            </thead>
             <tbody id="adminOrdersTableBody"></tbody>
           </table>
         </div>
@@ -839,7 +840,7 @@ function initAdminPage() {
         <div>
           <strong style="color: var(--primary);">🔐 Chế độ xem trước Quản trị:</strong>
           <span style="font-size: 0.9rem; color: var(--text-muted);">
-            Để Thêm / Sửa / Xóa món, Duyệt đơn hàng và xem Thống kê doanh thu, vui lòng đăng nhập tài khoản Admin (<code>admin</code> / <code>Admin@123</code>).
+            Để Thêm / Sửa / Xóa món, Duyệt đơn hàng và xem Thống kê doanh thu, vui lòng đăng nhập tài khoản Admin.
           </span>
         </div>
         <button type="button" class="btn btn-primary btn-sm" onclick="openAuthModal()">Đăng Nhập Admin</button>
@@ -1094,6 +1095,11 @@ function initAdminPage() {
 
   /* --- 4.2B QUẢN LÝ ĐƠN HÀNG & DOANH THU (CHO ADMIN) --- */
   async function renderAdminOrdersSection() {
+    // Bảng duyệt đơn mới (js/admin-orders.js). Phần code bảng cũ bên dưới chỉ là phương án dự phòng.
+    if (window.AdminOrderBoard && document.getElementById('adminOrderBoard')) {
+      return window.AdminOrderBoard.render();
+    }
+
     const tbody = document.getElementById('adminOrdersTableBody');
     const revBadge = document.getElementById('adminRevenueBadge');
     if (!tbody) return;

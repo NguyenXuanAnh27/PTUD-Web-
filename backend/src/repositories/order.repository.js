@@ -82,6 +82,18 @@ const createOrderWithDetails = async ({ userId, orderCode, customerName, custome
         `);
     }
 
+    // Bước 4: Ghi mốc đầu tiên của lịch sử trạng thái (khách vừa gửi đơn)
+    const historyReq = new sql.Request(transaction);
+    await historyReq
+      .input('orderId', sql.Int, createdOrder.Id)
+      .input('status', sql.NVarChar(20), 'pending')
+      .input('role', sql.NVarChar(20), 'customer')
+      .input('changedBy', sql.Int, userId)
+      .query(`
+        INSERT INTO dbo.OrderStatusHistory (OrderId, Status, ChangedByRole, ChangedByUserId)
+        VALUES (@orderId, @status, @role, @changedBy)
+      `);
+
     await transaction.commit();
     return findByIdWithDetails(createdOrder.Id);
   } catch (err) {
@@ -103,7 +115,10 @@ const findAll = async ({ status, from, to, keyword, userId, offset, limit }) => 
     request.input('userId', sql.Int, userId);
     conditions.push('o.UserId = @userId');
   }
-  if (status && status !== 'all') {
+  if (status === 'active') {
+    // "Đang xử lý": mọi đơn chưa hoàn thành và chưa hủy
+    conditions.push(`o.Status IN (N'pending', N'confirmed', N'preparing', N'ready')`);
+  } else if (status && status !== 'all') {
     request.input('status', sql.NVarChar(20), status);
     conditions.push('o.Status = @status');
   }
@@ -136,8 +151,20 @@ const findAll = async ({ status, from, to, keyword, userId, offset, limit }) => 
 
   const dataResult = await request.query(`
     SELECT o.Id, o.UserId, u.Username, o.OrderCode, o.TotalAmount, o.Status,
-           o.Note, o.CustomerName, o.CustomerPhone, o.CreatedAt, o.UpdatedAt,
-           (SELECT COUNT(*) FROM dbo.OrderDetails od WHERE od.OrderId = o.Id) AS ItemCount
+           o.Note, o.CancelReason, o.CustomerName, o.CustomerPhone, o.CreatedAt, o.UpdatedAt,
+           -- "Cách đây bao nhiêu giây" tính ngay trong SQL: không phụ thuộc cách driver/trình duyệt hiểu múi giờ
+           DATEDIFF(SECOND, o.CreatedAt, GETDATE()) AS CreatedSecondsAgo,
+           DATEDIFF(SECOND, o.UpdatedAt, GETDATE()) AS UpdatedSecondsAgo,
+           (SELECT COUNT(*) FROM dbo.OrderDetails od WHERE od.OrderId = o.Id) AS ItemCount,
+           -- Tóm tắt món để chủ quán nhìn là biết cần pha gì ("2x Cà phê sữa đá, 1x Bạc xỉu")
+           STUFF((
+             SELECT N', ' + CAST(d.Quantity AS NVARCHAR(10)) + N'x ' + p.Name
+             FROM dbo.OrderDetails d
+             INNER JOIN dbo.Products p ON d.ProductId = p.Id
+             WHERE d.OrderId = o.Id
+             ORDER BY d.Id
+             FOR XML PATH(''), TYPE
+           ).value('.', 'NVARCHAR(MAX)'), 1, 2, N'') AS ItemsSummary
     FROM dbo.Orders o
     INNER JOIN dbo.Users u ON o.UserId = u.Id
     WHERE ${whereClause}
@@ -159,8 +186,10 @@ const findByIdWithDetails = async (id) => {
     .input('id', sql.Int, id)
     .query(`
       SELECT o.Id, o.UserId, u.Username, u.Email AS UserEmail,
-             o.OrderCode, o.TotalAmount, o.Status, o.Note,
-             o.CustomerName, o.CustomerPhone, o.CreatedAt, o.UpdatedAt
+             o.OrderCode, o.TotalAmount, o.Status, o.Note, o.CancelReason,
+             o.CustomerName, o.CustomerPhone, o.CreatedAt, o.UpdatedAt,
+             DATEDIFF(SECOND, o.CreatedAt, GETDATE()) AS CreatedSecondsAgo,
+             DATEDIFF(SECOND, o.UpdatedAt, GETDATE()) AS UpdatedSecondsAgo
       FROM dbo.Orders o
       INNER JOIN dbo.Users u ON o.UserId = u.Id
       WHERE o.Id = @id
@@ -181,32 +210,95 @@ const findByIdWithDetails = async (id) => {
       ORDER BY od.Id ASC
     `);
 
+  const historyResult = await pool
+    .request()
+    .input('orderId', sql.Int, id)
+    .query(`
+      SELECT Id, Status, Note, ChangedByRole, CreatedAt,
+             DATEDIFF(SECOND, CreatedAt, GETDATE()) AS SecondsAgo
+      FROM dbo.OrderStatusHistory
+      WHERE OrderId = @orderId
+      ORDER BY CreatedAt ASC, Id ASC
+    `);
+
   return {
     ...order,
-    items: detailsResult.recordset
+    items: detailsResult.recordset,
+    history: historyResult.recordset
   };
 };
 
-const updateStatus = async (id, status) => {
+/**
+ * Đổi trạng thái đơn + ghi lịch sử trong 1 transaction.
+ * Dùng khóa lạc quan (expectedStatus): nếu giữa lúc đọc và lúc ghi có người khác đã đổi trạng thái
+ * (vd: 2 nhân viên cùng bấm) thì trả 409 thay vì ghi đè lên nhau.
+ */
+const updateStatus = async (id, { expectedStatus, status, reason, role, userId }) => {
   const pool = await getPool();
-  await pool
-    .request()
-    .input('id', sql.Int, id)
-    .input('status', sql.NVarChar(20), status)
-    .query(`
-      UPDATE dbo.Orders
-      SET Status = @status,
-          UpdatedAt = GETDATE()
-      WHERE Id = @id
-    `);
+  const transaction = new sql.Transaction(pool);
+  await transaction.begin();
+
+  try {
+    const updateResult = await new sql.Request(transaction)
+      .input('id', sql.Int, id)
+      .input('expected', sql.NVarChar(20), expectedStatus)
+      .input('status', sql.NVarChar(20), status)
+      .input('reason', sql.NVarChar(255), status === 'cancelled' ? reason || null : null)
+      .query(`
+        UPDATE dbo.Orders
+        SET Status = @status,
+            CancelReason = CASE WHEN @status = N'cancelled' THEN @reason ELSE CancelReason END,
+            UpdatedAt = GETDATE()
+        WHERE Id = @id AND Status = @expected
+      `);
+
+    if (!updateResult.rowsAffected[0]) {
+      throw new ApiError(409, 'Đơn hàng vừa được cập nhật ở nơi khác, vui lòng tải lại danh sách đơn');
+    }
+
+    await new sql.Request(transaction)
+      .input('orderId', sql.Int, id)
+      .input('status', sql.NVarChar(20), status)
+      .input('note', sql.NVarChar(255), reason || null)
+      .input('role', sql.NVarChar(20), role)
+      .input('changedBy', sql.Int, userId || null)
+      .query(`
+        INSERT INTO dbo.OrderStatusHistory (OrderId, Status, Note, ChangedByRole, ChangedByUserId)
+        VALUES (@orderId, @status, @note, @role, @changedBy)
+      `);
+
+    await transaction.commit();
+  } catch (err) {
+    try {
+      await transaction.rollback();
+    } catch {
+      // Bỏ qua lỗi rollback nếu transaction đã tự đóng
+    }
+    throw err;
+  }
 
   return findByIdWithDetails(id);
+};
+
+/**
+ * Tổng hợp số đơn theo trạng thái (cho bảng duyệt đơn của admin) + ID đơn "chờ duyệt" mới nhất
+ * để trình duyệt biết khi nào có đơn mới mà báo chuông.
+ */
+const getStatusSummary = async () => {
+  const pool = await getPool();
+  const result = await pool.request().query(`
+    SELECT Status, COUNT(*) AS Total, MAX(Id) AS LatestId
+    FROM dbo.Orders
+    GROUP BY Status
+  `);
+  return result.recordset;
 };
 
 module.exports = {
   createOrderWithDetails,
   findAll,
   findByIdWithDetails,
-  updateStatus
+  updateStatus,
+  getStatusSummary
 };
 

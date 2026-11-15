@@ -36,16 +36,40 @@ const createOrderValidator = [
     .withMessage('Số lượng mỗi món phải từ 1 đến 100')
 ];
 
+const ORDER_STATUSES = ['pending', 'confirmed', 'preparing', 'ready', 'completed', 'cancelled'];
+
 const updateOrderStatusValidator = [
   ...orderIdValidator,
   body('status')
-    .isIn(['pending', 'confirmed', 'completed', 'cancelled'])
-    .withMessage('Trạng thái đơn chỉ nhận: pending, confirmed, completed, cancelled')
+    .isIn(ORDER_STATUSES)
+    .withMessage(`Trạng thái đơn chỉ nhận: ${ORDER_STATUSES.join(', ')}`),
+
+  body('reason')
+    .optional({ values: 'falsy' })
+    .isString()
+    .withMessage('Lý do phải là chuỗi ký tự')
+    .bail()
+    .trim()
+    .isLength({ max: 255 })
+    .withMessage('Lý do tối đa 255 ký tự')
+];
+
+// Khách tự hủy đơn: lý do là tùy chọn
+const cancelOrderValidator = [
+  body('reason')
+    .optional({ values: 'falsy' })
+    .isString()
+    .withMessage('Lý do phải là chuỗi ký tự')
+    .bail()
+    .trim()
+    .isLength({ max: 255 })
+    .withMessage('Lý do tối đa 255 ký tự')
 ];
 
 module.exports = {
   orderIdValidator,
   createOrderValidator,
-  updateOrderStatusValidator
+  updateOrderStatusValidator,
+  cancelOrderValidator
 };
 

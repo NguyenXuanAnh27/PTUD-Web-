@@ -27,13 +27,23 @@ const getOrderById = asyncHandler(async (req, res) => {
 });
 
 const updateOrderStatus = asyncHandler(async (req, res) => {
-  const order = await orderService.updateOrderStatus(parseInt(req.params.id, 10), req.body.status);
+  const order = await orderService.updateOrderStatus(
+    parseInt(req.params.id, 10),
+    req.body.status,
+    req.user,
+    req.body.reason
+  );
   return sendSuccess(res, 200, 'Cập nhật trạng thái đơn hàng thành công', order);
 });
 
 const cancelMyOrder = asyncHandler(async (req, res) => {
-  const order = await orderService.cancelMyOrder(parseInt(req.params.id, 10), req.user);
+  const order = await orderService.cancelMyOrder(parseInt(req.params.id, 10), req.user, req.body && req.body.reason);
   return sendSuccess(res, 200, 'Hủy đơn hàng thành công', order);
+});
+
+const getOrderSummary = asyncHandler(async (req, res) => {
+  const summary = await orderService.getOrderSummary();
+  return sendSuccess(res, 200, 'Lấy tổng hợp đơn hàng thành công', summary);
 });
 
 module.exports = {
@@ -42,6 +52,7 @@ module.exports = {
   listMyOrders,
   getOrderById,
   updateOrderStatus,
-  cancelMyOrder
+  cancelMyOrder,
+  getOrderSummary
 };
 

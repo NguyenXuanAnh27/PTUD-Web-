@@ -14,6 +14,7 @@
     home: '<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"></path><path d="M5 10v10h14V10"></path><path d="M10 20v-6h4v6"></path></svg>',
     menu: '<svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>',
     cart: '<svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"></path></svg>',
+    orders: '<svg viewBox="0 0 24 24"><path d="M6 2h12v20l-3-2-3 2-3-2-3 2z"></path><line x1="9" y1="8" x2="15" y2="8"></line><line x1="9" y1="12" x2="15" y2="12"></line></svg>',
     user: '<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>'
   };
 
@@ -125,11 +126,11 @@
       return a;
     }
 
-    function button(icon, label, withBadge) {
+    function button(icon, label, withBadge, badgeClass) {
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'app-nav-item';
-      b.innerHTML = icon + '<span>' + label + '</span>' + (withBadge ? '<span class="cart-badge" style="display:none;">0</span>' : '');
+      b.innerHTML = icon + '<span>' + label + '</span>' + (withBadge ? '<span class="' + (badgeClass || 'cart-badge') + '" style="display:none;">0</span>' : '');
       return b;
     }
 
@@ -138,7 +139,14 @@
     var homeLink = link('index.html', NAV_ICONS.home, 'Trang chủ', onHome);
     var menuLink = link('menu.html', NAV_ICONS.menu, 'Thực đơn', onMenu);
     var cartBtn = button(NAV_ICONS.cart, 'Giỏ hàng', true);
+    var ordersBtn = button(NAV_ICONS.orders, 'Đơn hàng', true, 'order-badge');
     var userBtn = button(NAV_ICONS.user, 'Tài khoản', false);
+
+    ordersBtn.addEventListener('click', function () {
+      var token = typeof getAuthToken === 'function' ? getAuthToken() : '';
+      if (token && typeof openMyOrdersModal === 'function') openMyOrdersModal();
+      else if (typeof openAuthModal === 'function') openAuthModal();
+    });
 
     cartBtn.addEventListener('click', openCart);
     userBtn.addEventListener('click', function () {
@@ -154,6 +162,7 @@
     nav.appendChild(homeLink);
     nav.appendChild(menuLink);
     nav.appendChild(cartBtn);
+    nav.appendChild(ordersBtn);
     nav.appendChild(userBtn);
     document.body.appendChild(nav);
 

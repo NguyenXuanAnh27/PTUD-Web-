@@ -840,7 +840,7 @@ function initAdminPage() {
         <div>
           <strong style="color: var(--primary);">🔐 Chế độ xem trước Quản trị:</strong>
           <span style="font-size: 0.9rem; color: var(--text-muted);">
-            Để Thêm / Sửa / Xóa món, Duyệt đơn hàng và xem Thống kê doanh thu, vui lòng đăng nhập tài khoản Admin (<code>admin</code> / <code>Admin@123</code>).
+            Để Thêm / Sửa / Xóa món, Duyệt đơn hàng và xem Thống kê doanh thu, vui lòng đăng nhập tài khoản Admin.
           </span>
         </div>
         <button type="button" class="btn btn-primary btn-sm" onclick="openAuthModal()">Đăng Nhập Admin</button>

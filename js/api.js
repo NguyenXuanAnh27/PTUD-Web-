@@ -146,7 +146,6 @@ function ensureAuthUI() {
               </div>
               <div style="font-size:0.8rem; color:var(--text-muted); background:var(--bg-surface-alt); padding:10px 12px; border-radius:8px; margin-bottom:16px;">
                 <strong>Tài khoản demo:</strong><br/>
-                • Admin: <code>admin</code> / <code>Admin@123</code><br/>
                 • Khách: <code>khachhang1</code> / <code>User@123</code>
               </div>
               <button type="submit" class="btn btn-primary" style="width:100%;">Đăng Nhập</button>
